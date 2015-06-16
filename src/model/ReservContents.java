@@ -4,7 +4,15 @@ import java.io.Serializable;
 
 public class ReservContents implements Serializable {
 	int reservid,locateid,accountid;
-	String title,sttime,endtime,reserver,locate;
+	String title,sttime,stdate,endtime,enddate,reserver,locate;
+
+	public String getStdate() {
+		return stdate;
+	}
+
+	public String getEnddate() {
+		return enddate;
+	}
 
 	public ReservContents(){
 	}
@@ -74,6 +82,15 @@ public class ReservContents implements Serializable {
 	public void setLocate(String locate) {
 		this.locate = locate;
 	}
+
+	public void setStdate(String stdate) {
+		this.stdate = stdate;
+	}
+
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
+
 
 
 }
