@@ -17,7 +17,7 @@ public class SearchDAO {
 	private final String DB_PASS = "1714";
 
 	//データベースに日付で検索をかけて、予約ごとにインスタンスを生成し、リストに格納し、そのリストを返す。
-	public  List<ReservContents> search(String _date) {
+	public  List<ReservContents> search(String tabledate) {
 		Connection conn =null;
 
 		//ReservContentsを格納し、一日の予約を格納するリストを作成
@@ -28,9 +28,10 @@ public class SearchDAO {
 			conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 
 			//SELECT文の準備
-			String sql =
-			"SELECT title,locateid,accountid,sttime,endtime FROM reservtable WHERE to_char(sttime,'yyyy-mm-dd')='"+_date+"';";
-			PreparedStatement pstmt =conn.prepareStatement(sql);
+			String searchsql =
+			"SELECT reservid,title,locateid,accountid,sttime,endtime FROM kysdb.reservtable WHERE DATEDIFF(sttime,"+tabledate+")=0 or "
+					+ "DATEDIFF(endtime,"+tabledate+")=0 or (DATEDIFF(sttime,"+tabledate+")>=1 and DATEDIFF("+tabledate+",endtime,)>=1);";
+			PreparedStatement pstmt =conn.prepareStatement(searchsql);
 
 			ResultSet rs = pstmt.executeQuery();
 
