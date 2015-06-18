@@ -12,9 +12,9 @@ import model.ReservContents;
 
 public class SearchDAO {
 	private final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-	private final String JDBC_URL = "jdbc:postgresql://localhost:3306/kysdb";
+	private final String JDBC_URL = "jdbc:mysql://localhost:3306/kysdb";
 	private final String DB_USER = "root";
-	private final String DB_PASS = "1714";
+	private final String DB_PASS = "levelfive";
 
 	//データベースに日付で検索をかけて、予約ごとにインスタンスを生成し、リストに格納し、そのリストを返す。
 	public  List<ReservContents> search(String tabledate) {
@@ -54,8 +54,8 @@ public class SearchDAO {
 				ReservContents reserv = new ReservContents();
 				reserv.setReservid(reservid);
 				reserv.setTitle(title);
-				reserv.setLocateid(locateid);
-				reserv.setAccountid(accountid);
+				reserv.setResourceid(locateid);
+				reserv.setReserveridlist(accountid);
 				reserv.setSttime(sttime);
 				reserv.setEndtime(endtime);
 

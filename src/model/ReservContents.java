@@ -1,20 +1,19 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservContents implements Serializable {
-	int reservid,locateid,accountid;
-	String title,sttime,stdate,endtime,enddate,reserver,locate;
+	private int reservid,resourceid;
+	private String title,sttime,stdate,endtime,enddate,resource;
+	List<Integer> reserveridlist;
+	List<String> reserverlist;
 
-	public String getStdate() {
-		return stdate;
-	}
-
-	public String getEnddate() {
-		return enddate;
-	}
-
+	//コンストラクタ
 	public ReservContents(){
+		reserveridlist = new ArrayList<Integer>();
+		reserverlist = new ArrayList<String>();
 	}
 
 	//ゲッター
@@ -22,12 +21,12 @@ public class ReservContents implements Serializable {
 		return reservid;
 	}
 
-	public int getLocateid() {
-		return locateid;
+	public int getResourceid() {
+		return resourceid;
 	}
 
-	public int getAccountid() {
-		return accountid;
+	public List<Integer> getReserveridlist() {
+		return reserveridlist;
 	}
 
 	public String getTitle() {
@@ -42,25 +41,34 @@ public class ReservContents implements Serializable {
 		return endtime;
 	}
 
-	public String getReserver() {
-		return reserver;
+	public List<String> getReserverlist() {
+		return reserverlist;
 	}
 
-	public String getLocate() {
-		return locate;
+	public String getResource() {
+		return resource;
 	}
+
+	public String getStdate() {
+		return stdate;
+	}
+
+	public String getEnddate() {
+		return enddate;
+	}
+
 
 	//セッター
 	public void setReservid(int reservid) {
 		this.reservid = reservid;
 	}
 
-	public void setLocateid(int locateid) {
-		this.locateid = locateid;
+	public void setResourceid(int resourceid) {
+		this.resourceid = resourceid;
 	}
 
-	public void setAccountid(int accountid) {
-		this.accountid = accountid;
+	public void setReserveridlist(int reserverid) {
+		this.reserveridlist.add(reserverid);
 	}
 
 	public void setTitle(String title) {
@@ -75,12 +83,12 @@ public class ReservContents implements Serializable {
 		this.endtime = endtime;
 	}
 
-	public void setReserver(String reserver) {
-		this.reserver = reserver;
+	public void setReserverlist(String reserver) {
+		this.reserverlist.add(reserver);
 	}
 
-	public void setLocate(String locate) {
-		this.locate = locate;
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 
 	public void setStdate(String stdate) {

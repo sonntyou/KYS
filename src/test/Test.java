@@ -10,11 +10,14 @@ public static void main(String[] args) {
 
 	ReservContents reservcontents =new ReservContents();
 
-reservcontents.setAccountid(1);
-reservcontents.setLocateid(1);
-reservcontents.setSttime("2015-06-17 12:00");
+reservcontents.setReserveridlist(1);
+reservcontents.setReserveridlist(2);
+reservcontents.setReserveridlist(3);
+
+reservcontents.setResourceid(1);
+reservcontents.setSttime("2015-06-17 12:00:00");
 reservcontents.setTitle("会議");
-reservcontents.setEndtime("2015-06-17 12:30");
+reservcontents.setEndtime("2015-06-17 12:30:00");
 
 ReservDAO reservdao=new ReservDAO();
 
