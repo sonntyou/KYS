@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Javascriptの練習</title>
+<style type="text/css">
+<!--
+.pop a:hover{ /*マウスが乗ったら*/
+        position: relative;
+        top: 0px; left: 0px;
+}
+.fukidasipop { /*吹き出し本体*/
+        position: absolute;
+        top:17px; left:20px;
+        display: none; /*何も表示しない*/
+        padding: 5px; /*内側の余白*/
+        width: 300px; /*ブロックの幅
+        font-weight: bold; /*文字の太さ*/
+        text-decoration: none; /*文字飾り*/
+        color: #ffffff; /*文字色*/
+        background-color: #b22222; /*背景色*/
+
+        border-top:white solid 10px;
+        border-left:#b22222 solid 10px;
+
+     filter: alpha(opacity=85); /* IE */
+　　-moz-opacity:0.85; / *Firefox・Netscape */
+  　opacity:0.85; /* Opera・Safari */
+}
+a:hover .fukidasipop {
+        display: block; /*ブロック要素で表示*/
+}
+-->
+</style>
+
+</head>
+<body>
+	<script>
+		console.log("Hello,World!");
+	</script>
+
+	<p class="pop">このマスクは、
+<a href="javascript:void(0);">
+プリーツ構造<span class="fukidasipop">
+吹き出しポップアップ</span></a>です。
+
+<a href="javascript:void(0);">
+新型インフルエンザ
+<span class="fukidasipop">吹き出しポップアップ
+</span></a>対策
+<br>
+<br>
+吹き出しが少し透けて見えます。CSSでオブジェクトの透明度を操作する
+<br>Opacityプロパティを使って半透明を実現しています。
+</p>
+</body>
+</html>

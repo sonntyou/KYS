@@ -1,0 +1,86 @@
+@CHARSET "UTF-8";
+.over{
+width:200px;
+    height:100px;
+	background-color:#CCCCFF;
+	z-index : 100;
+	top:29;
+	left:0
+}
+
+.time {
+	border-style:none;
+	text-align:right;
+	height:120px;
+}
+
+.memori0{
+	 border-style:none;
+}
+
+.memori{
+	border-top:none;
+	border-left:none;
+}
+
+.timetitle {
+	color: red;
+	border-style:none;
+}
+
+.table
+{
+  border-collapse: collapse;
+  border-style:none;
+}
+
+.gyou{
+	height:1000px;
+}
+
+.sitebody{
+	width: 900px;
+}
+
+.calender{
+clear:left;
+}
+
+.reservform{
+  height: 300px;
+  width: 300px;
+  float: left;
+  padding: 30px;
+  color: white;
+  background-color: #40bfb0;
+  padding: 15px;
+  margin-bottom: 10px;
+	border-right: 1px solid #dddddd;
+
+}
+<!-- -->
+.dayreserv{
+	float:right;
+	padding: 30px;
+  color: black;
+  background-color: #FFFACD;
+  padding: 15px;
+  margin-bottom: 10px;
+	border-right: 1px solid #dddddd;
+
+}
+
+
+.appoint{
+	height:200px;
+	width:300px;
+	float:left;
+	 padding: 30px;
+  color: white;
+  background-color: #FFFF33;
+  padding: 15px;
+  margin-bottom: 10px;
+	border-right: 1px solid #dddddd;
+
+}
+

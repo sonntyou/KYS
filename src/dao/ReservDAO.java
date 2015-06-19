@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,21 +24,37 @@ public class ReservDAO {
 			Class.forName(DRIVER_NAME);
 			conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 
-			//重複がなければINSERT
-			String reservsql =getReservSQL(reservcontents);
+			//予約者の人数を取得
+			int reservnum=0;
+			int reservernum=-1;	//INSERTされた数(reservernum)と予約者数(reservercount)が等しいかどうかを調べるためにreservercountとは違う値で初期化している。
+			int reservercount=0;
+			int reservid=0;
+
+			String reservsql = getReservSQL(reservcontents);
 			PreparedStatement reservstmt =conn.prepareStatement(reservsql);
-
-			System.out.println(reservsql);
-
 			//SQL文(INSERT)の実行
-			int num = reservstmt.executeUpdate();
-			System.out.println("ここまでおーけ");
+			reservnum =reservstmt.executeUpdate();
+
+			if(reservnum==1){
+				String reservidsql = getReservidSQL(reservcontents);
+				PreparedStatement reservidstmt =conn.prepareStatement(reservidsql);
+				//SQL文(INSERT)の実行
+				ResultSet rs =reservidstmt.executeQuery();
+				while(rs.next()){
+					reservid= rs.getInt("reservid");
+				}
+				String reserversql = getReserverSQL(reservid,reservcontents);
+				PreparedStatement reserverstmt =conn.prepareStatement(reserversql);
+				//SQL文(INSERT)の実行
+				reservernum = reserverstmt.executeUpdate();
+				reservercount = reservcontents.getReserveridlist().size();
+			}
 
 
-			if(num == 0){
+			if(reservnum == 0){
 				//重複があった場合に実行
 				return 4;
-			}else if(num !=0){
+			}else if(reservnum ==1 && reservercount==reservernum){
 				//予約が正常に終了したときに実行
 				return 5;
 			}
@@ -67,32 +84,48 @@ public class ReservDAO {
 		//ReservContentsに登録された予約情報をゲットしてます。
 		String title = reservcontents.getTitle();
 		int resourceid=reservcontents.getResourceid();
-		List<Integer> reserveridlist = reservcontents.getReserveridlist();
 		String sttime =reservcontents.getSttime();
 		String endtime = reservcontents.getEndtime();
 
-		String reservsql ="BEGIN; ";
-		reservsql += "INSERT INTO kysdb.reservtable (sttime,endtime,locateid,title)  SELECT '"+sttime+"','"+endtime+"',"+resourceid+",'"+title+"' "
+		String reservsql ="";
+		reservsql += "INSERT INTO kysdb.reservtable (sttime,endtime,resourceid,title)  SELECT '"+sttime+"','"+endtime+"',"+resourceid+",'"+title+"' "
 				+ " FROM dual "
 				+ " WHERE NOT EXISTS ( SELECT * FROM kysdb.reservtable WHERE "
-				+ " locateid="+resourceid+" "
+				+ " resourceid="+resourceid+" "
 				+ " and ((sttime<='"+sttime+"' and '"+sttime+"' < endtime) "
 				+ " or (sttime<'"+endtime+"'and '"+endtime+"' <= endtime) "
 				+ " or (sttime >= '"+sttime+"' and '"+endtime+"'>= endtime))); ";
 
+		return reservsql;
+	}
+
+	private String getReservidSQL(ReservContents reservcontents){
+		String reservidsql = "";
+		int resourceid=reservcontents.getResourceid();
+		String sttime =reservcontents.getSttime();
+
+		reservidsql += "SELECT reservid from kysdb.reservtable "
+				+ "where resourceid="+resourceid+" and sttime='"+sttime+"';";
+
+		return reservidsql;
+
+
+	}
+
+	private String getReserverSQL(int reservid,ReservContents reservcontents){
+		String reserversql="";
+		List<Integer> reserveridlist = reservcontents.getReserveridlist();
+
+		reserversql += "INSERT INTO kysdb.reservertable (reservid,accountid)  VALUES";
+
 		for(int i = 0 ; i < reserveridlist.size();i++){
-			reservsql += "INSERT INTO kysdb.reservertable (reservid,accountid)  SELECT (select max(reservid) from kysdb.reservtable),"+reserveridlist.get(i)+" "
-					+ " FROM dual "
-					+ " WHERE EXISTS ( SELECT * FROM kysdb.reservtable WHERE "
-					+ " locateid = "+resourceid+" "
-					+ " and ((sttime <= '"+sttime+"' and '"+sttime+"' < endtime)"
-					+ " or (sttime < '"+endtime+"'and '"+endtime+"' <= endtime)"
-					+ " or (sttime >= '"+sttime+"' and '"+endtime+"' >= endtime))); ";
+			 reserversql += "("+reservid+","+reserveridlist.get(i)+")";
+			 if(i<reserveridlist.size()-1){
+				 reserversql += ",";
+			 }
 
 		}
-		reservsql += "COMMIT;";
-
-		return reservsql;
+		return reserversql;
 	}
 
 

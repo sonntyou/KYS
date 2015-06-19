@@ -15,9 +15,9 @@ reservcontents.setReserveridlist(2);
 reservcontents.setReserveridlist(3);
 
 reservcontents.setResourceid(1);
-reservcontents.setSttime("2015-06-17 12:00:00");
+reservcontents.setSttime("2015-09-17 16:00:00");
 reservcontents.setTitle("会議");
-reservcontents.setEndtime("2015-06-17 12:30:00");
+reservcontents.setEndtime("2015-09-17 16:30:00");
 
 ReservDAO reservdao=new ReservDAO();
 
