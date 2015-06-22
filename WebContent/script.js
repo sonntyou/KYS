@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  var prefix_mail_list = 'mail_list_'; // 品目入力欄のname属性の接頭辞
+  var prefix_mail_list = 'mail_'; // 品目入力欄のname属性の接頭辞
 
 	// "品目の追加"ボタンを押した場合の処理
 	$('#btn_add').click(function(){

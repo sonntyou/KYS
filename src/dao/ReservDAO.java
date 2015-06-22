@@ -24,6 +24,22 @@ public class ReservDAO {
 			Class.forName(DRIVER_NAME);
 			conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 
+			//maillistからreserveridlistとreserverlistを作成
+			String accountsql = getAccountSQL(reservcontents);
+			PreparedStatement accountstmt =conn.prepareStatement(accountsql);
+			//SQL文(INSERT)の実行
+			ResultSet accountrs =accountstmt.executeQuery();
+			while(accountrs.next()){
+				reservcontents.setReserveridlist(accountrs.getInt("accountid"));
+				reservcontents.setReserverlist(accountrs.getString("name"));
+			}
+
+			if(!(reservcontents.getMaillist().size()==reservcontents.getReserverlist().size())){
+				//予約者がアカウント登録されていないときに実行
+				//登録されていな方が入力されました。管理者に問い合わせてください。
+				return 13;
+			}
+
 			//予約者の人数を取得
 			int reservnum=0;
 			int reservernum=-1;	//INSERTされた数(reservernum)と予約者数(reservercount)が等しいかどうかを調べるためにreservercountとは違う値で初期化している。
@@ -80,21 +96,40 @@ public class ReservDAO {
 		return 0;
 	}//reservメソッドの終わり
 
+	private String getAccountSQL(ReservContents reservcontents){
+		List<String> maillist = reservcontents.getMaillist();
+		String accountsql="";
+		accountsql += "SELECT accountid, name FROM kysdb.accounttable"
+				+ "WHERE mail IN (";
+
+		for(int i = 0; i < maillist.size();i++){
+			accountsql += "'"+maillist.get(i) +"'";
+
+			if(i < maillist.size()-1){
+				accountsql += ",";
+			}
+		}
+
+		accountsql += ");";
+
+		return accountsql;
+	}
+
 	private String getReservSQL(ReservContents reservcontents){
 		//ReservContentsに登録された予約情報をゲットしてます。
 		String title = reservcontents.getTitle();
 		int resourceid=reservcontents.getResourceid();
-		String sttime =reservcontents.getSttime();
-		String endtime = reservcontents.getEndtime();
+		String stdatetime =reservcontents.getStdatetime();
+		String enddatetime = reservcontents.getEnddatetime();
 
 		String reservsql ="";
-		reservsql += "INSERT INTO kysdb.reservtable (sttime,endtime,resourceid,title)  SELECT '"+sttime+"','"+endtime+"',"+resourceid+",'"+title+"' "
+		reservsql += "INSERT INTO kysdb.reservtable (stdatetime,enddatetime,resourceid,title)  SELECT '"+stdatetime+"','"+enddatetime+"',"+resourceid+",'"+title+"' "
 				+ " FROM dual "
 				+ " WHERE NOT EXISTS ( SELECT * FROM kysdb.reservtable WHERE "
 				+ " resourceid="+resourceid+" "
-				+ " and ((sttime<='"+sttime+"' and '"+sttime+"' < endtime) "
-				+ " or (sttime<'"+endtime+"'and '"+endtime+"' <= endtime) "
-				+ " or (sttime >= '"+sttime+"' and '"+endtime+"'>= endtime))); ";
+				+ " and ((stdatetime<='"+stdatetime+"' and '"+stdatetime+"' < enddatetime) "
+				+ " or (stdatetime<'"+enddatetime+"'and '"+enddatetime+"' <= enddatetime) "
+				+ " or (stdatetime >= '"+stdatetime+"' and '"+enddatetime+"'>= enddatetime))); ";
 
 		return reservsql;
 	}
@@ -102,10 +137,10 @@ public class ReservDAO {
 	private String getReservidSQL(ReservContents reservcontents){
 		String reservidsql = "";
 		int resourceid=reservcontents.getResourceid();
-		String sttime =reservcontents.getSttime();
+		String stdatetime =reservcontents.getStdatetime();
 
 		reservidsql += "SELECT reservid from kysdb.reservtable "
-				+ "where resourceid="+resourceid+" and sttime='"+sttime+"';";
+				+ "where resourceid="+resourceid+" and stdatetime='"+stdatetime+"';";
 
 		return reservidsql;
 

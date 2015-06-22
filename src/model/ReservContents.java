@@ -1,3 +1,9 @@
+/*
+ * ～datetime = yyyy-MM-dd HH:mm:ss
+ *
+ */
+
+
 package model;
 
 import java.io.Serializable;
@@ -6,9 +12,13 @@ import java.util.List;
 
 public class ReservContents implements Serializable {
 	private int reservid,resourceid;
-	private String title,sttime,stdate,endtime,enddate,resource;
+	private String title,stdatetime,enddatetime,resource;
+
 	List<Integer> reserveridlist;
 	List<String> reserverlist;
+	List<String> maillist;
+
+
 
 	//コンストラクタ
 	public ReservContents(){
@@ -24,6 +34,14 @@ public class ReservContents implements Serializable {
 	public int getResourceid() {
 		return resourceid;
 	}
+	public String getStdatetime() {
+		return stdatetime;
+	}
+
+	public String getEnddatetime() {
+		return enddatetime;
+	}
+
 
 	public List<Integer> getReserveridlist() {
 		return reserveridlist;
@@ -33,13 +51,6 @@ public class ReservContents implements Serializable {
 		return title;
 	}
 
-	public String getSttime() {
-		return sttime;
-	}
-
-	public String getEndtime() {
-		return endtime;
-	}
 
 	public List<String> getReserverlist() {
 		return reserverlist;
@@ -49,14 +60,9 @@ public class ReservContents implements Serializable {
 		return resource;
 	}
 
-	public String getStdate() {
-		return stdate;
+	public List<String> getMaillist() {
+		return maillist;
 	}
-
-	public String getEnddate() {
-		return enddate;
-	}
-
 
 	//セッター
 	public void setReservid(int reservid) {
@@ -75,14 +81,6 @@ public class ReservContents implements Serializable {
 		this.title = title;
 	}
 
-	public void setSttime(String sttime) {
-		this.sttime = sttime;
-	}
-
-	public void setEndtime(String endtime) {
-		this.endtime = endtime;
-	}
-
 	public void setReserverlist(String reserver) {
 		this.reserverlist.add(reserver);
 	}
@@ -91,14 +89,28 @@ public class ReservContents implements Serializable {
 		this.resource = resource;
 	}
 
-	public void setStdate(String stdate) {
-		this.stdate = stdate;
+	public void setStdatetime(String stdatetime) {
+		this.stdatetime = stdatetime;
 	}
 
-	public void setEnddate(String enddate) {
-		this.enddate = enddate;
+	public void setEnddatetime(String enddatetime) {
+		this.enddatetime = enddatetime;
 	}
 
+	public void setReserveridlist(List<Integer> reserveridlist) {
+		this.reserveridlist = reserveridlist;
+	}
 
+	public void setReserverlist(List<String> reserverlist) {
+		this.reserverlist = reserverlist;
+	}
+
+	public void setMaillist(List<String> maillist) {
+		this.maillist = maillist;
+	}
+
+	public void setMaillist(String mail){
+		this.maillist.add(mail);
+	}
 
 }

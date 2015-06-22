@@ -31,7 +31,7 @@ int size =reservlist.size();
 <h3>予約フォーム</h3>
 
 <form action ="/KYS/ReservCtrl" method ="post">
-	タイトル：<input type="text" name="title" placeholder="無題" value="無題"><br>
+	タイトル：<input type="text" name="title" placeholder="無題"><br>
 	予約場所：<select name="resourceid" size="1">
 				<option value="1">会議室</option>
 				<option value="2">応接室</option>
@@ -73,7 +73,7 @@ ${timechoices.minutechoices}
 
 
 	<ol id="mail_list">
-		<li><input type="text" name="mail_list_0" required>@level-five.jp</li>
+		<li><input type="text" name="mail_0" required>@level-five.jp</li>
 	</ol>
 	<input type="button" value="アドレス追加" id="btn_add">
 
@@ -175,8 +175,8 @@ ${calendar.calendar}
 <div>
 <%for(int i = 0;i<size;i++) {
 String title = reservlist.get(i).getTitle();
-String sttime = reservlist.get(i).getSttime();
-String endtime = reservlist.get(i).getEndtime();
+String sttime = reservlist.get(i).getStdatetime();
+String endtime = reservlist.get(i).getEnddatetime();
 String resource = reservlist.get(i).getResource();
 
 int resourceid = reservlist.get(i).getResourceid();

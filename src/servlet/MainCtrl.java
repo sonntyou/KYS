@@ -48,37 +48,6 @@ public class MainCtrl extends HttpServlet {
 		session.setAttribute("selectdatetime", today);
 
 		List<ReservContents> reservlist= new ArrayList<ReservContents>();
-		ReservContents rc1 = new ReservContents();
-		rc1.setSttime("2015-06-22 09:00:00");
-        rc1.setEndtime("2015-06-22 09:15:00");
-		rc1.setTitle("会議");
-		rc1.setResource("応接室");
-		rc1.setReserverlist("飯野");
-		rc1.setReserverlist("猪野");
-		rc1.setReserverlist("田中");
-		rc1.setReserverlist("土方");
-		rc1.setReservid(1);
-		rc1.setResourceid(2);
-
-		ReservContents rc2 = new ReservContents();
-		rc2.setSttime("2015-06-22 09:15:00");
-        rc2.setEndtime("2015-06-22 13:00:00");
-		rc2.setTitle("会議");
-		rc1.setResource("応接室");
-		rc2.setReservid(2);
-		rc2.setResourceid(2);
-
-		ReservContents rc3 = new ReservContents();
-		rc3.setSttime("2015-06-22 16:00:00");
-        rc3.setEndtime("2015-06-22 17:00:00");
-		rc3.setTitle("会議");
-		rc1.setResource("リフレッシュルーム");
-		rc3.setReservid(3);
-        rc3.setResourceid(3);
-
-		reservlist.add(rc1);
-		reservlist.add(rc2);
-		reservlist.add(rc3);
 
 		session.setAttribute("reservlist", reservlist);
 
