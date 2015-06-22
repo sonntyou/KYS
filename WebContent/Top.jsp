@@ -32,39 +32,54 @@ int size =reservlist.size();
 
 <form action ="/KYS/ReservCtrl" method ="post">
 	タイトル：<input type="text" name="title" placeholder="無題" value="無題"><br>
-	予約場所：<select name="locate" size="1">
+	予約場所：<select name="resourceid" size="1">
 				<option value="1">会議室</option>
 				<option value="2">応接室</option>
 				<option value="3">リフレッシュルーム</option>
 			</select><br>
 開始時間：
-<select name="year">
+<select name="styear">
 ${timechoices.yearchoices}
 </select> 年
-<select name="month">
+<select name="stmonth">
 ${timechoices.monthchoices }
 </select> 月
-<select name="day">
+<select name="stday">
 ${timechoices.daychoices }
 </select> 日
-<select name="shour">
+<select name="sthour">
 ${timechoices.hourchoices }
 </select> 時
-<select name="sminute">
+<select name="stminute">
 ${timechoices.minutechoices}
 </select> 分<br>
 
 終了時間：
-<select name="fhour">
+<select name="endyear">
+${timechoices.yearchoices}
+</select> 年
+<select name="endmonth">
+${timechoices.monthchoices }
+</select> 月
+<select name="endday">
+${timechoices.daychoices }
+</select> 日
+<select name="endhour">
 ${timechoices.hourchoices}
 </select> 時
-<select name="fminute">
+<select name="endminute">
 ${timechoices.minutechoices}
 </select> 分<br>
 
-mail：<input type="text" name="mail1" value=""required>@level-five.jp<br>
-mail：<input type="text" name="mail2" value="">@level-five.jp<br>
-mail：<input type="text" name="mail3" value="">@level-five.jp<br>
+
+	<ol id="mail_list">
+		<li><input type="text" name="mail_list_0" required>@level-five.jp</li>
+	</ol>
+	<input type="button" value="アドレス追加" id="btn_add">
+
+		<!-- JavaScript -->
+		<script src="http://code.jquery.com/jquery.min.js"></script>
+		<script src="script.js"></script>
 
 <input type="submit" value="予約">
 </form>
@@ -204,7 +219,7 @@ int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
 			mail:<br>
 			<form action="/KYS/DeleteCtrl" method="Post">
 			<input type="text" name="mail" required>@level-five.jp
-			<input type="submit" value="削除">
+			<input type="submit" value="削除" onClick="return confirm('本当に削除しますか？')">
 			</form>
 		</span>
 	</a>

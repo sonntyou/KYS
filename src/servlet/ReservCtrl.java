@@ -47,54 +47,36 @@ public class ReservCtrl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-	    CalendarLogic calendar = new CalendarLogic();
 
-	    ZonedDateTime now = ZonedDateTime.now();
-	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-		SelectDateTime today = new SelectDateTime(currentdatetime);
-
+	    String title = request.getParameter("title");
+	    String stringresourceid = request.getParameter("resourceid");
+	    int resourceid = Integer.parseInt(stringresourceid);
+	    String styear = request.getParameter("styear");
+	    String stmonth = request.getParameter("stmonth");
+	    String stday = request.getParameter("stday");
+	    String sthour = request.getParameter("sthour");
+	    String stminute = request.getParameter("stminute");
+	    String endyear = request.getParameter("endyear");
+	    String endmonth = request.getParameter("endmonth");
+	    String endday = request.getParameter("endday");
+	    String endhour = request.getParameter("endhour");
+	    String endminute = request.getParameter("endminute");
+	    
+	    //送られてきたメールアドレスの分だけ取り出したい！
+	    for()
+	    
+	    String stdatetime = styear+"-"+stmonth+"-"+stday+" "+sthour+":"+stminute+":00";
+	    String enddatetime = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute+":00";
+	    
+		SelectDateTime today = new SelectDateTime(stdatetime);
 		TimeChoices timechoices = new TimeChoices(today);
+		
+		
 
-
-	    session.setAttribute("calendar", calendar);
 		session.setAttribute("timechoices",timechoices);
 		session.setAttribute("selectdatetime", today);
 
 		List<ReservContents> reservlist= new ArrayList<ReservContents>();
-		ReservContents rc1 = new ReservContents();
-		rc1.setSttime("2015-06-22 09:00:00");
-        rc1.setEndtime("2015-06-22 09:15:00");
-		rc1.setTitle("会議");
-		rc1.setReservid(1);
-		rc1.setResourceid(2);
-
-		ReservContents rc2 = new ReservContents();
-		rc2.setSttime("2015-06-22 09:15:00");
-        rc2.setEndtime("2015-06-22 13:00:00");
-		rc2.setTitle("会議");
-		rc2.setReservid(2);
-		rc2.setResourceid(2);
-
-		ReservContents rc3 = new ReservContents();
-		rc3.setSttime("2015-06-22 16:00:00");
-        rc3.setEndtime("2015-06-22 17:00:00");
-		rc3.setTitle("会議");
-		rc3.setReservid(3);
-        rc3.setResourceid(3);
-
-		ReservContents rc4 = new ReservContents();
-		rc4.setSttime("2015-06-22 09:00:00");
-        rc4.setEndtime("2015-06-22 10:00:00");
-		rc4.setTitle("無題");
-		rc4.setReservid(3);
-        rc4.setResourceid(3);
-
-		reservlist.add(rc1);
-		reservlist.add(rc2);
-		reservlist.add(rc3);
-		reservlist.add(rc4);
-
 
 		session.setAttribute("reservlist", reservlist);
 
