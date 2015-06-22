@@ -21,7 +21,7 @@
 <div class="sitebody">
 <%
 	int width = 150;
-	int leftref = 434;
+	int leftref = 436;
 	int topref= 157;
 List<ReservContents> reservlist = (List<ReservContents>)session.getAttribute("reservlist");
 int size =reservlist.size();
@@ -30,7 +30,7 @@ int size =reservlist.size();
 <div class="reservform">
 <h3>予約フォーム</h3>
 
-<form action ="/KYS/TopCtrl" method ="post">
+<form action ="/KYS/ReservCtrl" method ="post">
 	タイトル：<input type="text" name="title" placeholder="無題" value="無題"><br>
 	予約場所：<select name="locate" size="1">
 				<option value="1">会議室</option>
@@ -62,9 +62,9 @@ ${timechoices.hourchoices}
 ${timechoices.minutechoices}
 </select> 分<br>
 
-メールアドレス1：<input type="text" name="mail1" value=""required>@level-five.jp<br>
-メールアドレス2：<input type="text" name="mail2" value="">@level-five.jp<br>
-メールアドレス3:<input type="text" name="mail3" value="">@level-five.jp<br>
+mail：<input type="text" name="mail1" value=""required>@level-five.jp<br>
+mail：<input type="text" name="mail2" value="">@level-five.jp<br>
+mail：<input type="text" name="mail3" value="">@level-five.jp<br>
 
 <input type="submit" value="予約">
 </form>
@@ -72,7 +72,7 @@ ${timechoices.minutechoices}
 
 
 <div class="dayreserv">
-	<p>${today.today}の予定</p>
+	<p>${selectdatetime.year}年${selectdatetime.month}月${selectdatetime.day}日の予定</p>
 
 		<table class="table" border="1">
 			<tr>
@@ -162,6 +162,8 @@ ${calendar.calendar}
 String title = reservlist.get(i).getTitle();
 String sttime = reservlist.get(i).getSttime();
 String endtime = reservlist.get(i).getEndtime();
+String resource = reservlist.get(i).getResource();
+
 int resourceid = reservlist.get(i).getResourceid();
 //始まりの時間と分
 String convshour=sttime.substring(11,13);
@@ -187,13 +189,23 @@ int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
 	<a class="reserv" href="#" style="position:absolute; left:<%=leftside%>px; top:<%=topside%>px; height:<%=height%>px; width:<%=width%>px;">
 		<%=title %>
 		<span class="fukidasipop">
-			場所：応接室<br>
-			時間：9:00～10:00<br>
-			予約者：飯野、猪野、田中<br>
+			場所：<%=resource%><br>
+			時間：<%=convshour%>:<%=convsminute%>～<%=convfhour%>:<%=convfminute%><br>
+			予約者：
+
+			<%
+			String reserver ="";
+			for(int j = 0; j < reservlist.get(i).getReserverlist().size();j++){
+			%>
+				<%=reservlist.get(i).getReserverlist().get(j) %>
+			<%}%>
 			<br>
-			削除パスワード:<br>
-			<input type="password" name="deletepass">
+			<br>
+			mail:<br>
+			<form action="/KYS/DeleteCtrl" method="Post">
+			<input type="text" name="mail" required>@level-five.jp
 			<input type="submit" value="削除">
+			</form>
 		</span>
 	</a>
 

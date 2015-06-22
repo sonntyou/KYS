@@ -297,7 +297,7 @@ public class CalendarLogic {
     private String getLeftButtonForm(String currentyear, String currentmonth){
         String destination = getMainDestination();
         String form =getForm(destination);
-        String idleft = "left",valueleft = "前の月" ;
+        String idleft = "left",valueleft = "前" ;
 
         String yearhidden = getInput("",hidden,"year",currentyear);
         String monthhidden = getInput("",hidden,"month",currentmonth);
@@ -315,7 +315,7 @@ public class CalendarLogic {
         String yearhidden = getInput("",hidden,"year",currentyear);
         String monthhidden = getInput("",hidden,"month",currentmonth);
         String righthidden = getInput("",hidden,"prenext","next");
-        String rightbutton = getSubmit("right","次の月");
+        String rightbutton = getSubmit("right","次");
 
         return form+righthidden+yearhidden+monthhidden+rightbutton+endform;
     }

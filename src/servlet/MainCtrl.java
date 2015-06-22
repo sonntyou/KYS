@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
 import model.ReservContents;
+import model.SelectDateTime;
 import model.TimeChoices;
-import model.Today;
 
 /**
  * Servlet implementation class MainCtrl
@@ -34,26 +34,29 @@ public class MainCtrl extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 	    CalendarLogic calendar = new CalendarLogic();
-	    
-	    ZonedDateTime now = ZonedDateTime.now();
-	    String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    String todaytime = now.format(DateTimeFormatter.ofPattern("HH:mm"));
 
-		Today today = new Today(date);
-		today.setTodayTime(todaytime);
+	    ZonedDateTime now = ZonedDateTime.now();
+	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		SelectDateTime today = new SelectDateTime(currentdatetime);
 
 		TimeChoices timechoices = new TimeChoices(today);
 
 
 	    session.setAttribute("calendar", calendar);
 		session.setAttribute("timechoices",timechoices);
-		session.setAttribute("today", today);
+		session.setAttribute("selectdatetime", today);
 
 		List<ReservContents> reservlist= new ArrayList<ReservContents>();
 		ReservContents rc1 = new ReservContents();
 		rc1.setSttime("2015-06-22 09:00:00");
         rc1.setEndtime("2015-06-22 09:15:00");
 		rc1.setTitle("会議");
+		rc1.setResource("応接室");
+		rc1.setReserverlist("飯野");
+		rc1.setReserverlist("猪野");
+		rc1.setReserverlist("田中");
+		rc1.setReserverlist("土方");
 		rc1.setReservid(1);
 		rc1.setResourceid(2);
 
@@ -61,6 +64,7 @@ public class MainCtrl extends HttpServlet {
 		rc2.setSttime("2015-06-22 09:15:00");
         rc2.setEndtime("2015-06-22 13:00:00");
 		rc2.setTitle("会議");
+		rc1.setResource("応接室");
 		rc2.setReservid(2);
 		rc2.setResourceid(2);
 
@@ -68,6 +72,7 @@ public class MainCtrl extends HttpServlet {
 		rc3.setSttime("2015-06-22 16:00:00");
         rc3.setEndtime("2015-06-22 17:00:00");
 		rc3.setTitle("会議");
+		rc1.setResource("リフレッシュルーム");
 		rc3.setReservid(3);
         rc3.setResourceid(3);
 

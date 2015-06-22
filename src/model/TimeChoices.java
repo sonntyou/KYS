@@ -8,30 +8,35 @@ import java.util.Map;
 
 public class TimeChoices {
 
-    private String minutechoices,hourchoices,daychoices,monthchoices,yearchoices;
+    private String intminutechoices,inthourchoices,intdaychoices,intmonthchoices,intyearchoices;
 
 
-    public TimeChoices(Today todaytime){
+    public TimeChoices(SelectDateTime selecttime){
         /*
         Mapは参照型
-        以下の処理に加えて、Today.javaから現在の年月日を取得し、todayに代入。
+        以下の処理に加えて、Tointday.javaから現在の年月日を取得し、tointdayに代入。
     */
-        String today=todaytime.getToday()+" "+todaytime.getTodayTime();
+
+        String year = selecttime.getYear();
+        String month = selecttime.getMonth();
+        String day = selecttime.getDay();
+        String hour = selecttime.getHour();
+        String minute = selecttime.getMinute();
 
     //substring(インデックス,何文字目か)
-    int year= Integer.parseInt(today.substring(0,4));
-    int month= Integer.parseInt(today.substring(5,7));
-    int day= Integer.parseInt(today.substring(8,10));
-    int chkday =day;    //月の処理のところでどうしても必要なのでやむを得なく追加
-    int hour= Integer.parseInt(today.substring(11,13));
-    int minute= Integer.parseInt(today.substring(14,16));
+    int intyear= Integer.parseInt(year);
+    int intmonth= Integer.parseInt(month);
+    int intday= Integer.parseInt(day);
+    int chkintday =intday;    //月の処理のところでどうしても必要なのでやむを得なく追加
+    int inthour= Integer.parseInt(hour);
+    int intminute= Integer.parseInt(minute);
 
     //プルダウンメニューに選択肢を表示するために必要な文字列
     String optionst = "<option value=";
     String optionend ="</option>";
 
     //現在の分を初期選択肢にするための処理
-    Map<Integer,String> minutemap = new HashMap<Integer, String>();
+    Map<Integer,String> intminutemap = new HashMap<Integer, String>();
     for(int i = 0; i<=45;i=i+15){
         String mchoice;
         if(i<10){
@@ -39,43 +44,43 @@ public class TimeChoices {
         }else{
         mchoice= optionst + "\""+i+"\">"+i+optionend;
         }
-        minutemap.put(i,mchoice);
+        intminutemap.put(i,mchoice);
     }
-    if((hour >= 21 && minute >0)|| hour < 9 ){
-        minute = 0;
-    }else if(minute==0){
+    if((inthour >= 21 && intminute >0)|| inthour < 9 ){
+        intminute = 0;
+    }else if(intminute==0){
         //そのまま
-    }else if(minute <= 15){
-        minute = 15;
-    }else if(minute <= 30){
-        minute = 30;
-    }else if(minute <=45){
-        minute = 45;
-    }else if(minute >45){
+    }else if(intminute <= 15){
+        intminute = 15;
+    }else if(intminute <= 30){
+        intminute = 30;
+    }else if(intminute <=45){
+        intminute = 45;
+    }else if(intminute >45){
         //45分を超えていたら時間を繰り上げる。
-        minute =0;
-        hour++;
+        intminute =0;
+        inthour++;
     }
-    String selectedminute;
-    if(minute<10){
-        selectedminute = optionst + "\"0"+minute+"\" selected>"+minute+optionend;
+    String selectedintminute;
+    if(intminute<10){
+        selectedintminute = optionst + "\"0"+intminute+"\" selected>"+intminute+optionend;
     }else{
-        selectedminute = optionst + "\""+minute+"\" selected>"+minute+optionend;
+        selectedintminute = optionst + "\""+intminute+"\" selected>"+intminute+optionend;
     }
-    minutemap.put(minute, selectedminute);
+    intminutemap.put(intminute, selectedintminute);
 
-    String minutechoices = "";
+    String intminutechoices = "";
     for(int i = 0; i <=45; i=i+15){
-        minutechoices += minutemap.get(i);
+        intminutechoices += intminutemap.get(i);
     }
 
-    this.minutechoices=minutechoices;
+    this.intminutechoices=intminutechoices;
 
     /*  現在の時間を初期選択肢にするための処理
         分の繰り上がり処理を行ってから時間の処理をするべきだから
         分の後に処理をする必要がある。
     */
-    Map<Integer,String> hourmap = new HashMap<Integer, String>();
+    Map<Integer,String> inthourmap = new HashMap<Integer, String>();
     for(int i = 9; i<=21;i++){
          String hchoice;
         if(i<10){
@@ -83,62 +88,62 @@ public class TimeChoices {
         }else{
             hchoice=optionst + "\""+i+"\">"+i+optionend;
         }
-        hourmap.put(i,hchoice);
+        inthourmap.put(i,hchoice);
     }
-    if(hour <=9){
-        hour=9;
-    }else if(hour >= 21){
-        hour=9;
-        chkday++;
+    if(inthour <=9){
+        inthour=9;
+    }else if(inthour >= 21){
+        inthour=9;
+        chkintday++;
     }
-    String selectedhour;
-    if(hour<10){
-        selectedhour = optionst + "\"0"+ hour +"\" selected>"+ hour +optionend;
+    String selectedinthour;
+    if(inthour<10){
+        selectedinthour = optionst + "\"0"+ inthour +"\" selected>"+ inthour +optionend;
     }else{
-        selectedhour = optionst + "\""+ hour +"\" selected>"+ hour +optionend;
+        selectedinthour = optionst + "\""+ inthour +"\" selected>"+ inthour +optionend;
     }
-    hourmap.put(hour, selectedhour);
-    String hourchoices = "";
+    inthourmap.put(inthour, selectedinthour);
+    String inthourchoices = "";
     for(int i = 9; i <=21; i++){
-        hourchoices += hourmap.get(i);
+        inthourchoices += inthourmap.get(i);
     }
 
-    this.hourchoices=hourchoices;
+    this.inthourchoices=inthourchoices;
 
     //現在の日を初期選択肢にするための処理
         //アクセスした月の最終日(うるう年考慮)をintlastDateに格納
-    LocalDate localdate = LocalDate.of(year,month,day);
+    LocalDate localdate = LocalDate.of(intyear,intmonth,intday);
     YearMonth ym = YearMonth.from(localdate);
     LocalDate lastDate = ym.atEndOfMonth();
     String StringlastDate = lastDate.format(DateTimeFormatter.ofPattern("dd"));
     int intlastDate = Integer.parseInt(StringlastDate);
     /*
         たとえば、2015年6月30日22:00にアクセスしたとすると
-        直前の時間の処理でhourは9:00になり、chkdayが+1されている。
+        直前の時間の処理でinthourは9:00になり、chkintdayが+1されている。
         そうすると6月31日になるわけだが、それは存在しない。
         存在しない年月日をLocalDateに入れるとエラーを吐くので、
-        そのために、dayとは別にchkdayを設けた。
-        存在しない場合は、monthを+1し、dayを1にする。
+        そのために、intdayとは別にchkintdayを設けた。
+        存在しない場合は、intmonthを+1し、intdayを1にする。
         プルダウンメニューに欲しい項目は、新しい月の日数なので
         ここで、またintlastDateを再評価する。
     */
-    if(chkday > intlastDate ){
-        day=1;
-        if(month+1 >12){    //学習ポイント！前置++と後置++と+1の違い
-            year++;
-            month=1;
+    if(chkintday > intlastDate ){
+        intday=1;
+        if(intmonth+1 >12){    //学習ポイント！前置++と後置++と+1の違い
+            intyear++;
+            intmonth=1;
         }else{
-            month++;
+            intmonth++;
         }
-        localdate = LocalDate.of(year,month,day);
+        localdate = LocalDate.of(intyear,intmonth,intday);
         ym = YearMonth.from(localdate);
         lastDate = ym.atEndOfMonth();
         StringlastDate = lastDate.format(DateTimeFormatter.ofPattern("dd"));
         intlastDate = Integer.parseInt(StringlastDate);
     }else{
-        day=chkday;
+        intday=chkintday;
     }
-    Map<Integer,String> daymap = new HashMap<Integer, String>();
+    Map<Integer,String> intdaymap = new HashMap<Integer, String>();
     for(int i = 1; i<=intlastDate;i++){
          String dchoice;
         if(i<10){
@@ -146,25 +151,25 @@ public class TimeChoices {
         }else{
             dchoice=optionst + "\""+i+"\">"+i+optionend;
         }
-        daymap.put(i,dchoice);
+        intdaymap.put(i,dchoice);
     }
-    String selectedday;
-    if(day<10){
-        selectedday = optionst + "\"0"+ day +"\" selected>"+ day + optionend;
+    String selectedintday;
+    if(intday<10){
+        selectedintday = optionst + "\"0"+ intday +"\" selected>"+ intday + optionend;
     }else{
-        selectedday = optionst + "\""+ day +"\" selected>"+ day + optionend;
+        selectedintday = optionst + "\""+ intday +"\" selected>"+ intday + optionend;
     }
-    daymap.put(day, selectedday);
+    intdaymap.put(intday, selectedintday);
 
-    String daychoices = "";
+    String intdaychoices = "";
     for(int i = 1; i <=intlastDate; i++){
-        daychoices += daymap.get(i);
+        intdaychoices += intdaymap.get(i);
     }
 
-    this.daychoices=daychoices;
+    this.intdaychoices=intdaychoices;
 
     //現在の月を初期選択肢にするための処理
-    Map<Integer,String> monthmap = new HashMap<Integer, String>();
+    Map<Integer,String> intmonthmap = new HashMap<Integer, String>();
     for(int i = 1; i<=12;i++){
         String monchoice;
         if(i<10){
@@ -172,63 +177,63 @@ public class TimeChoices {
         }else{
             monchoice=optionst + "\""+i+"\">"+i+optionend;
         }
-        monthmap.put(i,monchoice);
+        intmonthmap.put(i,monchoice);
     }
-    String selectedmonth;
-    if(month<10){
-        selectedmonth = optionst + "\"0"+ month +"\" selected>"+ month + optionend;
+    String selectedintmonth;
+    if(intmonth<10){
+        selectedintmonth = optionst + "\"0"+ intmonth +"\" selected>"+ intmonth + optionend;
     }else{
-        selectedmonth = optionst + "\""+ month +"\" selected>"+ month + optionend;
+        selectedintmonth = optionst + "\""+ intmonth +"\" selected>"+ intmonth + optionend;
     }
-    monthmap.put(month, selectedmonth);
+    intmonthmap.put(intmonth, selectedintmonth);
 
-    String monthchoices = "";
+    String intmonthchoices = "";
     for(int i = 1; i <=12; i++){
-        monthchoices += monthmap.get(i);
+        intmonthchoices += intmonthmap.get(i);
     }
 
-    this.monthchoices=monthchoices;
+    this.intmonthchoices=intmonthchoices;
 
     //現在の年を初期選択肢にするための処理
-    Map<Integer,String> yearmap = new HashMap<Integer, String>();
-    for(int i = year; i<=(year+10);i++){
+    Map<Integer,String> intyearmap = new HashMap<Integer, String>();
+    for(int i = intyear; i<=(intyear+10);i++){
         String ychoice=optionst + "\""+i+"\">"+i+optionend;
-        yearmap.put(i,ychoice);
+        intyearmap.put(i,ychoice);
     }
-    String selectedyear = optionst + "\""+year+"\" selected>"+year+optionend;
-    yearmap.put(year, selectedyear);
+    String selectedintyear = optionst + "\""+intyear+"\" selected>"+intyear+optionend;
+    intyearmap.put(intyear, selectedintyear);
 
-    String yearchoices = "";
-    for(int i = year; i <=(year+10); i++){
-        yearchoices += yearmap.get(i);
+    String intyearchoices = "";
+    for(int i = intyear; i <=(intyear+10); i++){
+        intyearchoices += intyearmap.get(i);
     }
 
-    this.yearchoices=yearchoices;
+    this.intyearchoices=intyearchoices;
 
     }
 
 
     public String getMinutechoices() {
-        return minutechoices;
+        return intminutechoices;
     }
 
 
     public String getHourchoices() {
-        return hourchoices;
+        return inthourchoices;
     }
 
 
     public String getDaychoices() {
-        return daychoices;
+        return intdaychoices;
     }
 
 
     public String getMonthchoices() {
-        return monthchoices;
+        return intmonthchoices;
     }
 
 
     public String getYearchoices() {
-        return yearchoices;
+        return intyearchoices;
     }
 }
