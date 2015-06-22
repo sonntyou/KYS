@@ -84,3 +84,36 @@ clear:left;
 
 }
 
+.reserv {
+	z-index: 2;
+	background: #ffc867;
+	border: solid 1px #fff;
+	margin: 0;
+	padding: 0;
+	text-decoration:none;
+	text-align:center;
+}
+.reserv:hover{ /*マウスが乗ったら*/
+		z-index: 2147483647;
+        position: relative;
+        top: 0px; left: 0px;
+}
+.fukidasipop { /*吹き出し本体*/
+		text-align:left;
+        position: absolute;
+        top:17px; left:20px;
+        display: none; /*何も表示しない*/
+        padding: 5px; /*内側の余白*/
+        width: 300px; /*ブロックの幅
+        font-weight: bold; /*文字の太さ*/
+        text-decoration: none; /*文字飾り*/
+        color: #ffffff; /*文字色*/
+        background-color: #b22222; /*背景色*/
+     filter: alpha(opacity=85); /* IE */
+　　-moz-opacity:0.85; / *Firefox・Netscape */
+  　opacity:0.85; /* Opera・Safari */
+}
+.reserv:hover .fukidasipop {
+        display: block; /*ブロック要素で表示*/
+}
+

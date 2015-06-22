@@ -34,14 +34,15 @@ public class MainCtrl extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 	    CalendarLogic calendar = new CalendarLogic();
-	       ZonedDateTime now = ZonedDateTime.now();
-	        String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	        String todaytime = now.format(DateTimeFormatter.ofPattern("HH:mm"));
+	    
+	    ZonedDateTime now = ZonedDateTime.now();
+	    String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    String todaytime = now.format(DateTimeFormatter.ofPattern("HH:mm"));
 
-			Today today = new Today(date);
-			today.setTodayTime(todaytime);
+		Today today = new Today(date);
+		today.setTodayTime(todaytime);
 
-			TimeChoices timechoices = new TimeChoices(today);
+		TimeChoices timechoices = new TimeChoices(today);
 
 
 	    session.setAttribute("calendar", calendar);
@@ -50,22 +51,25 @@ public class MainCtrl extends HttpServlet {
 
 		List<ReservContents> reservlist= new ArrayList<ReservContents>();
 		ReservContents rc1 = new ReservContents();
-		rc1.setEndtime("2015-06-19 09:15:00");
-		rc1.setSttime("2015-06-19 09:00:00");
+		rc1.setSttime("2015-06-22 09:00:00");
+        rc1.setEndtime("2015-06-22 09:15:00");
 		rc1.setTitle("会議");
 		rc1.setReservid(1);
+		rc1.setResourceid(2);
 
 		ReservContents rc2 = new ReservContents();
-		rc2.setEndtime("2015-06-19 13:00:00");
-		rc2.setSttime("2015-06-19 09:15:00");
+		rc2.setSttime("2015-06-22 09:15:00");
+        rc2.setEndtime("2015-06-22 13:00:00");
 		rc2.setTitle("会議");
 		rc2.setReservid(2);
+		rc2.setResourceid(2);
 
 		ReservContents rc3 = new ReservContents();
-		rc3.setEndtime("2015-06-19 17:00:00");
-		rc3.setSttime("2015-06-19 16:00:00");
+		rc3.setSttime("2015-06-22 16:00:00");
+        rc3.setEndtime("2015-06-22 17:00:00");
 		rc3.setTitle("会議");
 		rc3.setReservid(3);
+        rc3.setResourceid(3);
 
 		reservlist.add(rc1);
 		reservlist.add(rc2);

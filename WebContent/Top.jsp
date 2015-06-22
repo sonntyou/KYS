@@ -2,25 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,model.ReservContents" %>
 <!DOCTYPE html>
-<html>
+<html  lang="ja">
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 <title>会議室予約システム</title>
 <link href="test.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+.reserv {display: block;}
+
+</style>
+
+
+
 
 </head>
 <body>
 <div class="sitebody">
 <%
 	int width = 150;
-
 	int leftref = 434;
 	int topref= 157;
-
 List<ReservContents> reservlist = (List<ReservContents>)session.getAttribute("reservlist");
-int size = 3;
-//size=reservlist.size();
-
+int size =reservlist.size();
 %>
 
 <div class="reservform">
@@ -153,82 +157,50 @@ ${timechoices.minutechoices}
 ${calendar.calendar}
 </div>
 
-
+<div>
 <%for(int i = 0;i<size;i++) {
-
 String title = reservlist.get(i).getTitle();
 String sttime = reservlist.get(i).getSttime();
 String endtime = reservlist.get(i).getEndtime();
 int resourceid = reservlist.get(i).getResourceid();
-
 //始まりの時間と分
 String convshour=sttime.substring(11,13);
 String convsminute=sttime.substring(14,16);
-
 //終わりの時間と分
 String convfhour=endtime.substring(11,13);
 String convfminute=endtime.substring(14,16);
-
 //始まりの時間と分をint型に
 int intshour= Integer.parseInt(convshour);
 int intsminute= Integer.parseInt(convsminute);
-
 //終わりのの時間と分をint型に
 int intfhour= Integer.parseInt(convfhour);
 int intfminute= Integer.parseInt(convfminute);
-
-//左端の値　テスト用、テスト用、テスト用、テスト用に値を直に入れしています
-int leftside = (2 - 1) * 150+leftref;
-
+//左端の値
+int leftside = (resourceid - 1) * 150+leftref;
 //上端と下端の値
 int px=120;
 int topside = (intshour-9)*px + intsminute*px/60+topref;
 int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
-
 %>
 
 
+	<a class="reserv" href="#" style="position:absolute; left:<%=leftside%>px; top:<%=topside%>px; height:<%=height%>px; width:<%=width%>px;">
+		<%=title %>
+		<span class="fukidasipop">
+			場所：応接室<br>
+			時間：9:00～10:00<br>
+			予約者：飯野、猪野、田中<br>
+			<br>
+			削除パスワード:<br>
+			<input type="password" name="deletepass">
+			<input type="submit" value="削除">
+		</span>
+	</a>
 
-<table class="reserv" style ="position:absolute; left:<%=leftside%>px ; top:<%=topside%>px" height=<%=height%> width=<%=width%> border="1" cellspacing="0">
-	<tr>
-		<th onMouseover="openMenu(1)" onMouseout="closeMenu()">
-			<%=title %>
-		</th>
-	</tr>
-</table>
-<table>
-	<tr>
-		<td class="over" style="width=2000px" onMouseover="openMenu(1)" onMouseout="closeMenu()">
-			test
-		</td>
-	</tr>
-</table>
+
 <%} %>
 
-
- <script>
-
-	function openMenu(n) {
-		closeMenu()
-		if(n==1){
-			over.style.display ="block";
-		}
-	}
-	function closeMenu(){
-		over.style.display = "none";
-	}
-
-$('td.over').hide();
-
-$('.reserv').hover(
-		    function(){
-		      $(this).find('.over').fadeIn();
-		    },
-		    function(){
-		      $(this).find('.over').fadeOut();
-		    }
-		  );
-  </script>
+</div>
   </div>
 </body>
 </html>
