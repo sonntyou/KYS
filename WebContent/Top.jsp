@@ -1,32 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,model.ReservContents" %>
+
 <!DOCTYPE html>
+
 <html  lang="ja">
+
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-<title>会議室予約システム</title>
 <link href="test.css" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
-<style type="text/css">
-.reserv {display: block;}
-
-</style>
-
-
-
-
+<title>会議室予約システム</title>
 </head>
+
 <body>
 <div class="sitebody">
+
+<!-- 最初にいくつかのデータを読み込む -->
 <%
-	int width = 150;
-	int leftref = 436;
-	int topref= 157;
+int width = 150;
+int leftref = 436;
+int topref= 157;
+
 List<ReservContents> reservlist = (List<ReservContents>)session.getAttribute("reservlist");
 int size =reservlist.size();
 %>
+<!-- 最初にいくつかのデータを読み込む(ここまで) -->
 
+<!-- 予約フォーム -->
 <div class="reservform">
 <h3>予約フォーム</h3>
 
@@ -84,8 +85,9 @@ ${timechoices.minutechoices}
 <input type="submit" value="予約">
 </form>
 </div>
+<!-- 予約フォーム(ここまで) -->
 
-
+<!-- １日の予約の一覧を表示する -->
 <div class="dayreserv">
 	<p>${selectdatetime.year}年${selectdatetime.month}月${selectdatetime.day}日の予定</p>
 
@@ -168,36 +170,63 @@ ${timechoices.minutechoices}
 
 </table>
 </div>
+<!-- １日の予約の一覧を表示する(ここまで) -->
+
+<!-- カレンダーを表示する -->
 <div class="calender">
 ${calendar.calendar}
 </div>
+<!-- カレンダーを表示する(ここまで) -->
 
+<!-- 予約ごとの表示 -->
 <div>
 <%for(int i = 0;i<size;i++) {
 String title = reservlist.get(i).getTitle();
-String sttime = reservlist.get(i).getStdatetime();
-String endtime = reservlist.get(i).getEnddatetime();
 String resource = reservlist.get(i).getResource();
+long longstconvdatetime = reservlist.get(i).getLongstconvdatetime();
+long longendconvdatetime = reservlist.get(i).getLongendconvdatetime();
+long longstdate09=reservlist.get(i).getLongstdate09();
+long longenddate21=reservlist.get(i).getLongenddate21();
+String sthour=reservlist.get(i).getSthour();
+String endhour=reservlist.get(i).getEndhour();
+String stminute=reservlist.get(i).getStminute();
+String endminute=reservlist.get(i).getEndminute();
+
+int intsthour;
+int intendhour;
+int intstminute;
+int intendminute;
 
 int resourceid = reservlist.get(i).getResourceid();
-//始まりの時間と分
-String convshour=sttime.substring(11,13);
-String convsminute=sttime.substring(14,16);
-//終わりの時間と分
-String convfhour=endtime.substring(11,13);
-String convfminute=endtime.substring(14,16);
-//始まりの時間と分をint型に
-int intshour= Integer.parseInt(convshour);
-int intsminute= Integer.parseInt(convsminute);
-//終わりのの時間と分をint型に
-int intfhour= Integer.parseInt(convfhour);
-int intfminute= Integer.parseInt(convfminute);
+
+if(longstdate09 <= longstconvdatetime && longendconvdatetime <= longenddate21 ){
+	intsthour = reservlist.get(i).getIntsthour();
+	intendhour=reservlist.get(i).getIntendhour();
+	intstminute=reservlist.get(i).getIntstminute();
+	intendminute=reservlist.get(i).getIntendminute();
+}else if(longstconvdatetime <= longstdate09 && longendconvdatetime <= longenddate21 ){
+	intsthour = 9;
+	intendhour= 0;
+	intstminute=reservlist.get(i).getIntstminute();
+	intendminute=reservlist.get(i).getIntendminute();
+}else if(longstdate09 <= longstconvdatetime &&  longenddate21 <= longendconvdatetime ){
+	intsthour = reservlist.get(i).getIntsthour();
+	intendhour=reservlist.get(i).getIntendhour();
+	intstminute=21;
+	intendminute= 0;
+}else{
+	intsthour = 9;
+	intendhour= 0;
+	intstminute=21;
+	intendminute= 0;
+}
+
 //左端の値
 int leftside = (resourceid - 1) * 150+leftref;
 //上端と下端の値
 int px=120;
-int topside = (intshour-9)*px + intsminute*px/60+topref;
-int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
+int topside = (intsthour-9)*px + intstminute*px/60+topref;
+int height = ((intendhour*60+intendminute)-(intendhour*60+intendminute))*px/60;
 %>
 
 
@@ -205,7 +234,7 @@ int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
 		<%=title %>
 		<span class="fukidasipop">
 			場所：<%=resource%><br>
-			時間：<%=convshour%>:<%=convsminute%>～<%=convfhour%>:<%=convfminute%><br>
+			時間：<%=sthour%>:<%=stminute%>～<%=endhour%>:<%=endminute%><br>
 			予約者：
 
 			<%
@@ -228,6 +257,8 @@ int height = ((intfhour*60+intfminute)-(intshour*60+intsminute))*px/60;
 <%} %>
 
 </div>
+<!-- 予約ごとの表示(ここまで) -->
+
   </div>
 </body>
 </html>

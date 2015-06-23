@@ -3,8 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
-import model.ReservContents;
+import model.SearchLogic;
 import model.SelectDateTime;
 import model.TimeChoices;
 
@@ -33,23 +31,26 @@ public class MainCtrl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-	    CalendarLogic calendar = new CalendarLogic();
 
+		//現在時刻の取得
 	    ZonedDateTime now = ZonedDateTime.now();
 	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+	    //現在時刻を渡したSelectDateTimeの生成と保存(一日の予定一覧の日付の表示に使用する)
 		SelectDateTime today = new SelectDateTime(currentdatetime);
-
-		TimeChoices timechoices = new TimeChoices(today);
-
-
-	    session.setAttribute("calendar", calendar);
-		session.setAttribute("timechoices",timechoices);
 		session.setAttribute("selectdatetime", today);
 
-		List<ReservContents> reservlist= new ArrayList<ReservContents>();
+		//アクセスした日の予約リストの生成と保存
+		SearchLogic searchlogic = new SearchLogic();
+		session.setAttribute("reservlist", searchlogic.execute());
 
-		session.setAttribute("reservlist", reservlist);
+		//カレンダーの生成と保存
+	    CalendarLogic calendar = new CalendarLogic();
+	    session.setAttribute("calendar", calendar);
+
+	    //アクセスしたときの日付を反映させたプルダウンメニューの生成と保存
+		TimeChoices timechoices = new TimeChoices(today);
+		session.setAttribute("timechoices",timechoices);
 
 		RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
 		dispatcher.forward(request,response);
@@ -71,8 +72,8 @@ public class MainCtrl extends HttpServlet {
 
         session.setAttribute("calendar", calendar);
 
-           RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
-            dispatcher.forward(request,response);
+        RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
+        dispatcher.forward(request,response);
 
 	}
 

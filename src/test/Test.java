@@ -1,29 +1,27 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.ReservContents;
-import dao.ReservDAO;
+import model.SearchLogic;
 
 public class Test {
 
 public static void main(String[] args) {
 
+	SearchLogic searchlogic = new SearchLogic();
+	List<ReservContents> reservlist = new ArrayList<ReservContents>();
+	reservlist = searchlogic.execute();
 
-	ReservContents reservcontents =new ReservContents();
+	for(int i = 0; i < reservlist.size();i++){
+		System.out.println(reservlist.get(i).getTitle());
+		System.out.println(reservlist.get(i).getReservid());
 
-reservcontents.setReserveridlist(1);
-reservcontents.setReserveridlist(2);
-reservcontents.setReserveridlist(3);
-
-reservcontents.setResourceid(1);
-reservcontents.setStdatetime("2015-09-17 16:00:00");
-reservcontents.setTitle("会議");
-reservcontents.setEnddatetime("2015-09-17 16:30:00");
-
-ReservDAO reservdao=new ReservDAO();
-
-int test= reservdao.reserv(reservcontents);
-
-System.out.println(test);
+		for(int j = 0; j<reservlist.get(i).getMaillist().size();j++){
+		System.out.println(reservlist.get(i).getMaillist().get(j));
+		}
+	}
 
 }
 
