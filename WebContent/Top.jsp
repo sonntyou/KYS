@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div class="sitebody">
+<div id="sitebody">
 
 <!-- 最初にいくつかのデータを読み込む -->
 <%
@@ -32,7 +32,7 @@ int size =reservlist.size();
 <h3>予約フォーム</h3>
 
 <form action ="/KYS/ReservCtrl" method ="post">
-	タイトル：<input type="text" name="title" placeholder="無題"><br>
+	タイトル：<input type="text" name="title" value="無題"><br>
 	予約場所：<select name="resourceid" size="1">
 				<option value="1">会議室</option>
 				<option value="2">応接室</option>

@@ -14,7 +14,7 @@ public class CalendarLogic {
 
     private String calendar;
     private final String stylesheet=
-            "#calendartable {border-collapse: collapse;}";
+            "";
 
 
 
@@ -329,7 +329,7 @@ public class CalendarLogic {
         String monthhidden = getInput("",hidden,"month",currentmonth);
         String dayhidden = getInput("",hidden,"day",day);
 
-        String daybutton = getSubmit("",intday);
+        String daybutton = getSubmit("day",intday);
 
         return form+yearhidden+monthhidden+dayhidden+daybutton+endform;
 

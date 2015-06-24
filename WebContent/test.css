@@ -1,87 +1,90 @@
 @CHARSET "UTF-8";
-.over{
-width:200px;
-    height:100px;
-	background-color:#CCCCFF;
-	z-index : 100;
-	top:29;
-	left:0
+
+div#sitebody {
+	width: 1000px;
+}
+
+.over {
+	width: 200px;
+	height: 100px;
+	background-color: #CCCCFF;
+	z-index: 100;
+	top: 29;
+	left: 0
 }
 
 .time {
-	border-style:none;
-	text-align:right;
-	height:120px;
+	border-style: none;
+	text-align: right;
+	height: 120px;
 }
 
-.memori0{
-	 border-style:none;
+.memori0 {
+	border-style: none;
 }
 
-.memori{
-	border-top:none;
-	border-left:none;
+.memori {
+	border-top: none;
+	border-left: none;
 }
 
 .timetitle {
 	color: red;
-	border-style:none;
+	border-style: none;
 }
 
-.table
-{
-  border-collapse: collapse;
-  border-style:none;
+.table {
+	border-collapse: collapse;
+	border-style: none;
 }
 
-.gyou{
-	height:1000px;
+.gyou {
+	height: 1000px;
 }
 
-.sitebody{
-	width: 900px;
-}
 
-.calender{
-clear:left;
-}
-
-.reservform{
-  height: 300px;
-  width: 325px;
-  float: left;
-  padding: 30px;
-  color: white;
-  background-color: #40bfb0;
-  padding: 15px;
-  margin-bottom: 10px;
-	border-right: 1px solid #dddddd;
+.calender {
+	clear: left;
 
 }
-<!-- -->
-.dayreserv{
-	float:right;
+
+/*  */
+#calendartable {border-collapse: collapse;}
+#left{}
+
+.reservform {
+	height: 300px;
+	width: 300px;
+	float: left;
 	padding: 30px;
-  color: black;
-  background-color: #FFFACD;
-  padding: 15px;
-  margin-bottom: 10px;
+	color: white;
+	background-color: #40bfb0;
+	padding: 15px;
+	margin-bottom: 10px;
 	border-right: 1px solid #dddddd;
-
 }
 
-
-.appoint{
-	height:200px;
-	width:300px;
-	float:left;
-	 padding: 30px;
-  color: white;
-  background-color: #FFFF33;
-  padding: 15px;
-  margin-bottom: 10px;
+.dayreserv {
+	float: right;
+	width: 580px;
+	padding: 30px;
+	color: black;
+	background-color: #ffffd5;
+	padding: 15px;
+	margin-bottom: 10px;
 	border-right: 1px solid #dddddd;
+}
 
+.appoint {
+	height: 200px;
+	width: 300px;
+	float: left;
+	padding: 30px;
+	color: white;
+	background-color: #FFFF33;
+	padding: 15px;
+	margin-bottom: 10px;
+	border-right: 1px solid #dddddd;
 }
 
 .reserv {
@@ -90,30 +93,39 @@ clear:left;
 	border: solid 1px #fff;
 	margin: 0;
 	padding: 0;
-	text-decoration:none;
-	text-align:center;
-}
-.reserv:hover{ /*マウスが乗ったら*/
-		z-index: 2147483647;
-        position: relative;
-        top: 0px; left: 0px;
-}
-.fukidasipop { /*吹き出し本体*/
-		text-align:left;
-        position: absolute;
-        top:17px; left:20px;
-        display: none; /*何も表示しない*/
-        padding: 5px; /*内側の余白*/
-        width: 300px; /*ブロックの幅
-        font-weight: bold; /*文字の太さ*/
-        text-decoration: none; /*文字飾り*/
-        color: #ffffff; /*文字色*/
-        background-color: #b22222; /*背景色*/
-     filter: alpha(opacity=85); /* IE */
-　　-moz-opacity:0.85; / *Firefox・Netscape */
-  　opacity:0.85; /* Opera・Safari */
-}
-.reserv:hover .fukidasipop {
-        display: block; /*ブロック要素で表示*/
+	text-decoration: none;
+	text-align: center;
 }
 
+.reserv:hover { /*マウスが乗ったら*/
+	z-index: 2147483647;
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+.fukidasipop { /*吹き出し本体*/
+	text-align: left;
+	position: absolute;
+	top: 17px;
+	left: 20px;
+	display: none; /*何も表示しない*/
+	padding: 5px; /*内側の余白*/
+	width: 300px; /*ブロックの幅
+        font-weight: bold; /*文字の太さ*/
+	text-decoration: none; /*文字飾り*/
+	color: #ffffff; /*文字色*/
+	background-color: #b22222; /*背景色*/
+	filter: alpha(opacity = 85); /* IE */
+	　　-moz-opacity: 0.85;
+	/
+	*Firefox・Netscape
+	*/
+	　opacity
+	:
+	0.85; /* Opera・Safari */
+}
+
+.reserv:hover .fukidasipop {
+	display: block; /*ブロック要素で表示*/
+}

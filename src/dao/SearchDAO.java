@@ -101,7 +101,6 @@ public class SearchDAO {
 				+ " WHERE DATEDIFF(r.sttime,'"+selectdate+"')=0 or "
 						+ "DATEDIFF(r.endtime,'"+selectdate+"')=0 or (DATEDIFF(r.sttime,'"+selectdate+"')>=1 and DATEDIFF('"+selectdate+"',r.endtime)>=1)"
 								+ "ORDER BY r.reservid;";
-		System.out.println(searchreservsql);
 		return searchreservsql;
 	}
 

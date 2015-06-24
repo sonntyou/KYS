@@ -46,22 +46,12 @@ public class DeleteCtrl extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 		HttpSession session = request.getSession();
-	    CalendarLogic calendar = new CalendarLogic();
 
-	    ZonedDateTime now = ZonedDateTime.now();
-	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-		SelectDateTime today = new SelectDateTime(currentdatetime);
-
-		TimeChoices timechoices = new TimeChoices(today);
-
-
-	    session.setAttribute("calendar", calendar);
-		session.setAttribute("timechoices",timechoices);
-		session.setAttribute("selectdatetime", today);
-
+		String reservid = request.getParameter("reservid");
+		String mail = request.getParameter("mail");
+		
+		SelectDateTime selectdatetime = (SelectDateTime)session.getAttribute("")
 		List<ReservContents> reservlist= new ArrayList<ReservContents>();
 
 

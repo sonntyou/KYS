@@ -46,6 +46,7 @@ public class ReservDAO {
 			int reservercount=0;
 			int reservid=0;
 
+			//重複判定をして予約データをINSERTする
 			String reservsql = getReservSQL(reservcontents);
 			PreparedStatement reservstmt =conn.prepareStatement(reservsql);
 			//SQL文(INSERT)の実行
@@ -99,7 +100,7 @@ public class ReservDAO {
 	private String getAccountSQL(ReservContents reservcontents){
 		List<String> maillist = reservcontents.getMaillist();
 		String accountsql="";
-		accountsql += "SELECT accountid, name FROM kysdb.accounttable"
+		accountsql += "SELECT accountid, name FROM kysdb.accounttable "
 				+ "WHERE mail IN (";
 
 		for(int i = 0; i < maillist.size();i++){
@@ -111,7 +112,6 @@ public class ReservDAO {
 		}
 
 		accountsql += ");";
-
 		return accountsql;
 	}
 
@@ -123,14 +123,14 @@ public class ReservDAO {
 		String enddatetime = reservcontents.getEnddatetime();
 
 		String reservsql ="";
-		reservsql += "INSERT INTO kysdb.reservtable (stdatetime,enddatetime,resourceid,title)  SELECT '"+stdatetime+"','"+enddatetime+"',"+resourceid+",'"+title+"' "
+		reservsql += "INSERT INTO kysdb.reservtable (sttime,endtime,resourceid,title)  SELECT '"+stdatetime+"','"+enddatetime+"',"+resourceid+",'"+title+"'"
 				+ " FROM dual "
 				+ " WHERE NOT EXISTS ( SELECT * FROM kysdb.reservtable WHERE "
 				+ " resourceid="+resourceid+" "
-				+ " and ((stdatetime<='"+stdatetime+"' and '"+stdatetime+"' < enddatetime) "
-				+ " or (stdatetime<'"+enddatetime+"'and '"+enddatetime+"' <= enddatetime) "
-				+ " or (stdatetime >= '"+stdatetime+"' and '"+enddatetime+"'>= enddatetime))); ";
-
+				+ " and ((sttime<='"+stdatetime+"' and '"+stdatetime+"' < endtime) "
+				+ " or (sttime<'"+enddatetime+"'and '"+enddatetime+"' <= endtime) "
+				+ " or (sttime >= '"+stdatetime+"' and '"+enddatetime+"'>= endtime))); ";
+		System.out.println(reservsql);
 		return reservsql;
 	}
 

@@ -3,30 +3,47 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeleteDAO {
 
 	private final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-	private final String JDBC_URL = "jdbc:postgresql://localhost:3306/kysdb";
+	private final String JDBC_URL = "jdbc:mysql://localhost:3306/kysdb";
 	private final String DB_USER = "root";
-	private final String DB_PASS = "1714";
-	
-	public int delete(int reservid , String password) {
+	private final String DB_PASS = "levelfive";
+
+	public int delete(int reservid, String mail) {
 		Connection conn = null;
 
 		try {
 			Class.forName(DRIVER_NAME);
 			conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
-			
-			
-			String deletesql ="delete from KYSDB.reservtable join KYSDB.accounttable on KYSDB.accounttable.accountid=KYSDB.reservtable.accountid "
-					+ "where"+reservid+"=reservid and'"+password+"'=password;";
-			
-			PreparedStatement pstmt =conn.prepareStatement(deletesql);
+
+
+			String searchsql =""
+					+ "SELECT reservid,mail "
+					+ "FROM kysdb.reservertable as a "
+					+ "JOIN kysdb.accounttable as b ON a.accountid = b.accountid "
+					+ "where a.reservid = "+reservid+" and b.mail = '"+mail+"';";
+			System.out.println(searchsql);
+			PreparedStatement pstmt =conn.prepareStatement(searchsql);
 			//SQL文の実行
-			int num = pstmt.executeUpdate();
-			
+			ResultSet rs = pstmt.executeQuery();
+
+			int num;
+
+			if(rs.next()){
+				//reservidとmailが一致しているときに実行
+				String deletesql = ""
+						+ "DELETE FROM kysdb.reservtable WHERE reservid = "+reservid+";";
+				PreparedStatement delstmt = conn.prepareStatement(deletesql);
+				num = delstmt.executeUpdate();
+			}else{
+				//reservidとmailが一致していないときに実行
+				return 14;
+			}
+
 			if(num==1){
 				return 6;
 		}
