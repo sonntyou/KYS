@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.ReservContents;
 import model.ReservLogic;
+import model.SearchLogic;
 import model.SelectDateTime;
 
 /**
@@ -20,14 +21,6 @@ import model.SelectDateTime;
 @WebServlet("/ReservCtrl")
 public class ReservCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ReservCtrl() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,17 +53,16 @@ public class ReservCtrl extends HttpServlet {
 	    String stdatetime = styear+"-"+stmonth+"-"+stday+" "+sthour+":"+stminute+":00";
 	    String enddatetime = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute+":00";
 
-		SelectDateTime reservdatetime = new SelectDateTime(stdatetime);
-
-		//送られてきた情報をReservContentsにセットしていく
+	    //送られてきた情報をReservContentsにセットしていく
 		ReservContents reservcontents = new ReservContents();
 
 	    //送られてきたメールアドレスの分だけ取り出したい！
 	    for(int i = 0; ;i++){
-	    	if(request.getParameter("mail_"+i).equals(null)){
+	    	String mail = request.getParameter("mail_"+i);
+	    	if(mail ==null){
 	    		break;
 	    	}else{
-	    		reservcontents.setMaillist(request.getParameter("mail_"+i));
+	    		reservcontents.setMaillist(mail);
 	    	}
 
 	    }
@@ -82,7 +74,11 @@ public class ReservCtrl extends HttpServlet {
 		ReservLogic reservlogic =new ReservLogic();
 		int judge = reservlogic.execute(reservcontents);
 
+		//予約した日付を1日の予約一覧に反映させる
+		SelectDateTime reservdatetime = new SelectDateTime(stdatetime);
 		session.setAttribute("selectdatetime", reservdatetime);
+		SearchLogic searchlogic = new SearchLogic();
+		session.setAttribute("reservlist", searchlogic.execute(styear+"-"+stmonth+"-"+stday));
 
 //		List<ReservContents> reservlist= new ArrayList<ReservContents>();
 //
