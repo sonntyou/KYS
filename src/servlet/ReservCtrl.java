@@ -37,9 +37,6 @@ public class ReservCtrl extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 
-	    String title = request.getParameter("title");
-	    String stringresourceid = request.getParameter("resourceid");
-	    int resourceid = Integer.parseInt(stringresourceid);
 	    String styear = request.getParameter("styear");
 	    String stmonth = request.getParameter("stmonth");
 	    String stday = request.getParameter("stday");
@@ -69,7 +66,7 @@ public class ReservCtrl extends HttpServlet {
 //			RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
 //			dispatcher.forward(request,response);
 //
-//	    }
+//	    }else
 
 	    //終了時間が開始時間以前だった場合、エラーを返す。
 	    if(Long.parseLong(stconvdatetime)>=Long.parseLong(endconvdatetime)){
@@ -78,52 +75,51 @@ public class ReservCtrl extends HttpServlet {
 	    	session.setAttribute("judge", judge);
 			RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
 			dispatcher.forward(request,response);
+	    }else{
 
-	    }
+	    	String title = request.getParameter("title");
+	    	String stringresourceid = request.getParameter("resourceid");
+	    	int resourceid = Integer.parseInt(stringresourceid);
 
-	    String stdatetime = styear+"-"+stmonth+"-"+stday+" "+sthour+":"+stminute+":00";
-	    String enddatetime = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute+":00";
+	    	String stdatetime = styear+"-"+stmonth+"-"+stday+" "+sthour+":"+stminute+":00";
+	    	String enddatetime = endyear+"-"+endmonth+"-"+endday+" "+endhour+":"+endminute+":00";
 
-	    //送られてきた情報をReservContentsにセットしていく
-		ReservContents reservcontents = new ReservContents();
+	    	//送られてきた情報をReservContentsにセットしていく
+	    	ReservContents reservcontents = new ReservContents();
 
 
-	    //送られてきたメールアドレスの分だけ取り出したい！
+	    	//送られてきたメールアドレスの分だけ取り出したい！
 
-		 String mails[] = request.getParameterValues("mail");
+	    	String mails[] = request.getParameterValues("mail");
 		    if (mails != null){
-		      for (int i = 0 ; i < mails.length ; i++){
-		    	  reservcontents.setMaillist(mails[i]);
-		      }
+		    	for (int i = 0 ; i < mails.length ; i++){
+		    		reservcontents.setMaillist(mails[i]);
+		    	}
+		    }
+
+		    reservcontents.setTitle(title);
+		    reservcontents.setResourceid(resourceid);
+		    reservcontents.setStdatetime(stdatetime);
+		    reservcontents.setEnddatetime(enddatetime);
+
+		    //予約をする
+		    ReservLogic reservlogic =new ReservLogic();
+		    int judgenum = reservlogic.execute(reservcontents);
+
+		    //エラー関連
+		    Judge judge = new Judge();
+		    judge.setJudge(judgenum);
+		    session.setAttribute("judge", judge);
+
+		    //予約した日付を1日の予約一覧に反映させる
+		    SelectDateTime reservdatetime = new SelectDateTime(stdatetime);
+		    session.setAttribute("selectdatetime", reservdatetime);
+		    SearchLogic searchlogic = new SearchLogic();
+		    session.setAttribute("reservlist", searchlogic.execute(styear+"-"+stmonth+"-"+stday));
+
+		    RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
+		    dispatcher.forward(request,response);
+	    	}
 		}
-
-		reservcontents.setTitle(title);
-		reservcontents.setResourceid(resourceid);
-		reservcontents.setStdatetime(stdatetime);
-		reservcontents.setEnddatetime(enddatetime);
-
-		//予約をする
-		ReservLogic reservlogic =new ReservLogic();
-		int judgenum = reservlogic.execute(reservcontents);
-
-		//エラー関連
-		Judge judge = new Judge();
-		judge.setJudge(judgenum);
-		session.setAttribute("judge", judge);
-
-		//予約した日付を1日の予約一覧に反映させる
-		SelectDateTime reservdatetime = new SelectDateTime(stdatetime);
-		session.setAttribute("selectdatetime", reservdatetime);
-		SearchLogic searchlogic = new SearchLogic();
-		session.setAttribute("reservlist", searchlogic.execute(styear+"-"+stmonth+"-"+stday));
-
-//		List<ReservContents> reservlist= new ArrayList<ReservContents>();
-//
-//		session.setAttribute("reservlist", reservlist);
-
-		RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
-		dispatcher.forward(request,response);
-
-	}
 
 }

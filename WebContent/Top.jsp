@@ -85,7 +85,7 @@ ${timechoices.minutechoices}
 		<script src="http://code.jquery.com/jquery.min.js"></script>
 		<script src="script.js"></script>
 
-<input type="submit" value="予約">
+<input type="submit" value="予約" onClick="return confirm('予約しますか？')">
 </form>
 
 </div>
