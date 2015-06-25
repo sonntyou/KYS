@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,22 +54,22 @@ public class ReservCtrl extends HttpServlet {
 	    String stconvdatetime =styear+stmonth+stday+sthour+stminute+"00";
 	    String endconvdatetime =endyear+endmonth+endday+endhour+endminute+"00";
 
-		//現在時刻の取得
-	    ZonedDateTime now = ZonedDateTime.now();
-	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		SelectDateTime today = new SelectDateTime(currentdatetime);
-		String currentconvdatetime = today.getConvdatetime();
-		long intcurrentconvdatetime = Long.parseLong(currentconvdatetime);
-
-		//過去の時刻を入力されたときにエラーを返す。
-		if(Long.parseLong(stconvdatetime)<=intcurrentconvdatetime || Long.parseLong(endconvdatetime)<=intcurrentconvdatetime){
-	    	Judge judge = new Judge();
-	    	judge.setJudge(16);
-	    	session.setAttribute("judge", judge);
-			RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
-			dispatcher.forward(request,response);
-
-	    }
+//		//現在時刻の取得
+//	    ZonedDateTime now = ZonedDateTime.now();
+//	    String currentdatetime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//		SelectDateTime today = new SelectDateTime(currentdatetime);
+//		String currentconvdatetime = today.getConvdatetime();
+//		long intcurrentconvdatetime = Long.parseLong(currentconvdatetime);
+//
+//		//過去の時刻を入力されたときにエラーを返す。
+//		if(Long.parseLong(stconvdatetime)<=intcurrentconvdatetime || Long.parseLong(endconvdatetime)<=intcurrentconvdatetime){
+//	    	Judge judge = new Judge();
+//	    	judge.setJudge(16);
+//	    	session.setAttribute("judge", judge);
+//			RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
+//			dispatcher.forward(request,response);
+//
+//	    }
 
 	    //終了時間が開始時間以前だった場合、エラーを返す。
 	    if(Long.parseLong(stconvdatetime)>=Long.parseLong(endconvdatetime)){
