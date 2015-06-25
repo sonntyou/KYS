@@ -30,8 +30,8 @@ int size =reservlist.size();
 %>
 <!-- 最初にいくつかのデータを読み込む(ここまで) -->
 
+<div class=leftside>
 <!-- 予約フォーム -->
-
 <div class="reservform">
 <h3>予約フォーム</h3>
 
@@ -91,6 +91,12 @@ ${timechoices.minutechoices}
 
 </div>
 <!-- 予約フォーム(ここまで) -->
+<!-- カレンダーを表示する -->
+<div class="calender">
+${calendar.calendar}
+</div>
+<!-- カレンダーを表示する(ここまで) -->
+</div>
 
 <!-- １日の予約の一覧を表示する -->
 <div class="dayreserv">
@@ -184,12 +190,6 @@ ${timechoices.minutechoices}
 </div>
 
 <!-- Judg.jspの動的インクルード -->
-
-<!-- カレンダーを表示する -->
-<div class="calender">
-${calendar.calendar}
-</div>
-<!-- カレンダーを表示する(ここまで) -->
 
 <!-- 予約ごとの表示 -->
 <div>
