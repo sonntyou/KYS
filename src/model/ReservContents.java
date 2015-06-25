@@ -42,6 +42,30 @@ public class ReservContents implements Serializable {
 	//メールのリストです。
 	private List<String> maillist;
 
+	public String getStyear() {
+		return styear;
+	}
+
+	public String getEndyear() {
+		return endyear;
+	}
+
+	public String getStmonth() {
+		return stmonth;
+	}
+
+	public String getEndmonth() {
+		return endmonth;
+	}
+
+	public String getStday() {
+		return stday;
+	}
+
+	public String getEndday() {
+		return endday;
+	}
+
 	/*
 	 * 予約テーブル表示用変数
 	 * JSP内での計算を減らすために用意してある変数
@@ -50,12 +74,8 @@ public class ReservContents implements Serializable {
 	//形式 : yyyyMMddHHmmss
 	private long longstconvdatetime;
 	private long longendconvdatetime;
-	//形式 : yyyyMMdd090000
-	private long longstdate09;
-	//形式 : yyyyMMdd210000
-	private long longenddate21;
 
-	//枠の大きさを決めるのに使用
+	//予約ごとのの大きさを決めるのに使用
 	//形式 : HH
 	private int intsthour;
 	private int intendhour;
@@ -64,6 +84,16 @@ public class ReservContents implements Serializable {
 	private int intendminute;
 
 	//予約ごとの詳細ポップアップの時間表示に使用
+	//yyyy
+	private String styear;
+	private String endyear;
+	//MM
+	private String stmonth;
+	private String endmonth;
+	//dd
+	private String stday;
+	private String endday;
+
 	//形式 : HH
 	private String sthour;
 	private String endhour;
@@ -130,13 +160,6 @@ public class ReservContents implements Serializable {
 		return longendconvdatetime;
 	}
 
-	public long getLongstdate09() {
-		return longstdate09;
-	}
-
-	public long getLongenddate21() {
-		return longenddate21;
-	}
 	public String getSthour() {
 		return sthour;
 	}
@@ -203,6 +226,7 @@ public class ReservContents implements Serializable {
 	}
 
 	public void setStdatetime(String stdatetime) {
+		//予約格納の際に必ず呼び出される。
 		this.stdatetime = stdatetime;
 
 	    String year= stdatetime.substring(0,4);
@@ -213,7 +237,10 @@ public class ReservContents implements Serializable {
 	    String second=stdatetime.substring(17,19);
 
 	    this.selectdate=year+"-"+month+"-"+day;
-
+	    
+	    this.styear=year;
+	    this.stmonth=month;
+	    this.stday=day;
 	    this.sthour = hour;
 	    this.stminute = minute;
 	    this.intsthour = Integer.parseInt(sthour);
@@ -222,17 +249,11 @@ public class ReservContents implements Serializable {
 	    String stconvdatetime = year+month+day+hour+minute+second;
 	    this.longstconvdatetime = Long.parseLong(stconvdatetime);
 
-	    String stconvdate = year+month+day;
-	    String stdate09 = stconvdate+"090000";
-	    this.longstdate09=Long.parseLong(stdate09);
-
-	    String stdate21 = stconvdate+"210000";
-	    this.longenddate21=Long.parseLong(stdate21);
-
 
 	}
 
 	public void setEnddatetime(String enddatetime) {
+		//予約格納の際に必ず呼び出される。
 		this.enddatetime = enddatetime;
 
 	    String year= enddatetime.substring(0,4);
@@ -242,6 +263,9 @@ public class ReservContents implements Serializable {
 	    String minute= enddatetime.substring(14,16);
 	    String second=enddatetime.substring(17,19);
 
+	    this.endyear=year;
+	    this.endmonth=month;
+	    this.endday=day;
 	    this.endhour = hour;
 	    this.endminute = minute;
 	    this.intendhour = Integer.parseInt(endhour);

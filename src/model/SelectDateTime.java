@@ -23,6 +23,11 @@ import java.io.Serializable;
 public class SelectDateTime implements Serializable {
 	private String datetime,date,time,year,month,day,hour,minute,second;
 	private String convdatetime,convdate,convtime;
+	//形式 : yyyyMMdd090000
+	private long longselectconvdatetime09;
+	//形式 : yyyyMMdd210000
+	private long longselectconvdatetime21;
+
 
 	public SelectDateTime(){
 
@@ -55,6 +60,9 @@ public class SelectDateTime implements Serializable {
 	    this.convdate = year+month+day;
 	    this.convtime = hour+minute+second;
 
+	    this.longselectconvdatetime09 = Long.parseLong(convdate+"090000");
+	    this.longselectconvdatetime21 = Long.parseLong(convdate+"210000");
+
 
 	}
 
@@ -72,6 +80,9 @@ public class SelectDateTime implements Serializable {
 	    this.convdatetime = year+month+day+hour+minute+second;
 	    this.convdate = year+month+day;
 	    this.convtime = hour+minute+second;
+
+	    this.longselectconvdatetime09 = Long.parseLong(convdate+"090000");
+	    this.longselectconvdatetime21 = Long.parseLong(convdate+"210000");
 
 
 
@@ -92,6 +103,9 @@ public class SelectDateTime implements Serializable {
 	    this.convdate = year+month+day;
 	    this.convtime = hour+minute+second;
 
+	    this.longselectconvdatetime09 = Long.parseLong(convdate+"090000");
+	    this.longselectconvdatetime21 = Long.parseLong(convdate+"210000");
+
 
 	}
 
@@ -110,6 +124,8 @@ public class SelectDateTime implements Serializable {
 	    this.convdate = year+month+day;
 	    this.convtime = hour+minute+second;
 
+	    this.longselectconvdatetime09 = Long.parseLong(convdate+"090000");
+	    this.longselectconvdatetime21 = Long.parseLong(convdate+"210000");
 
 	}
 
@@ -161,6 +177,15 @@ public class SelectDateTime implements Serializable {
 	public String getConvtime() {
 		return convtime;
 	}
+
+	public long getLongselectconvdatetime09() {
+		return longselectconvdatetime09;
+	}
+
+	public long getLongselectconvdatetime21() {
+		return longselectconvdatetime21;
+	}
+
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;

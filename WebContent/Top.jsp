@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,model.ReservContents" %>
+<%@ page import="java.util.List,model.ReservContents,model.SelectDateTime" %>
 
 <!DOCTYPE html>
 
@@ -25,6 +25,7 @@ int leftref =458;
 int topref= 157;
 
 List<ReservContents> reservlist = (List<ReservContents>)session.getAttribute("reservlist");
+SelectDateTime selectdatetime = (SelectDateTime)session.getAttribute("selectdatetime");
 int size =reservlist.size();
 %>
 <!-- 最初にいくつかのデータを読み込む(ここまで) -->
@@ -197,10 +198,21 @@ String title = reservlist.get(i).getTitle();
 String resource = reservlist.get(i).getResource();
 long longstconvdatetime = reservlist.get(i).getLongstconvdatetime();
 long longendconvdatetime = reservlist.get(i).getLongendconvdatetime();
-long longstdate09=reservlist.get(i).getLongstdate09();
-long longenddate21=reservlist.get(i).getLongenddate21();
+long longselectconvdatetime09=selectdatetime.getLongselectconvdatetime09();
+long longselectconvdatetime21=selectdatetime.getLongselectconvdatetime21();
+
+String styear=reservlist.get(i).getStyear();
+String endyear=reservlist.get(i).getEndyear();
+
+String stmonth=reservlist.get(i).getStmonth();
+String endmonth=reservlist.get(i).getEndmonth();
+
+String stday=reservlist.get(i).getStday();
+String endday=reservlist.get(i).getEndyear();
+
 String sthour=reservlist.get(i).getSthour();
 String endhour=reservlist.get(i).getEndhour();
+
 String stminute=reservlist.get(i).getStminute();
 String endminute=reservlist.get(i).getEndminute();
 
@@ -211,22 +223,26 @@ int intendminute;
 
 int resourceid = reservlist.get(i).getResourceid();
 
-if(longstdate09 <= longstconvdatetime && longendconvdatetime <= longenddate21 ){
+if(longselectconvdatetime09 <= longstconvdatetime && longendconvdatetime <= longselectconvdatetime21 ){
+	//始まりの時間も終わりの時間も登録されている情報をそのまま使う
 	intsthour = reservlist.get(i).getIntsthour();
-	intendhour=reservlist.get(i).getIntendhour();
 	intstminute=reservlist.get(i).getIntstminute();
+	intendhour=reservlist.get(i).getIntendhour();
 	intendminute=reservlist.get(i).getIntendminute();
-}else if(longstconvdatetime <= longstdate09 && longendconvdatetime <= longenddate21 ){
+}else if(longstconvdatetime <= longselectconvdatetime09 && longendconvdatetime <= longselectconvdatetime21 ){
+	//始まりの時間は9時からで、終わりの時間は登録されている情報を使う。
 	intsthour = 9;
-	intendhour= 21;
-	intstminute=reservlist.get(i).getIntstminute();
+	intstminute= 0;
+	intendhour= reservlist.get(i).getIntendhour();
 	intendminute=reservlist.get(i).getIntendminute();
-}else if(longstdate09 <= longstconvdatetime &&  longenddate21 <= longendconvdatetime ){
+}else if(longselectconvdatetime09 <= longstconvdatetime &&  longselectconvdatetime21 <= longendconvdatetime ){
+	//始まりの時間はそのまま使って、終わりの時間は21時を使う。
 	intsthour = reservlist.get(i).getIntsthour();
-	intendhour=reservlist.get(i).getIntendhour();
-	intstminute=0;
+	intstminute=reservlist.get(i).getIntstminute();
+	intendhour=21;
 	intendminute=0;
 }else{
+	//日を完全にまたいでいるときは、9時から21時まで。
 	intsthour = 9;
 	intendhour= 21;
 	intstminute=0;
@@ -246,7 +262,8 @@ int height = ((intendhour*60+intendminute)-(intsthour*60+intstminute))*px/60;
 		<%=title %>
 		<span class="fukidasipop">
 			場所：<%=resource%><br>
-			時間：<%=sthour%>:<%=stminute%>～<%=endhour%>:<%=endminute%><br>
+			時間：<%=styear %>/<%=stmonth %>/<%=stday %> <%=sthour%>:<%=stminute%>～<br>
+				  <%=endyear %>/<%=endmonth %>/<%=endday %> <%=endhour%>:<%=endminute%><br>
 			予約者：
 
 			<%
