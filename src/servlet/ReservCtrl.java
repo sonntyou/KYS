@@ -53,8 +53,8 @@ public class ReservCtrl extends HttpServlet {
 	    String endhour = request.getParameter("endhour");
 	    String endminute = request.getParameter("endminute");
 
-	    String stconvdatetime =styear+stmonth+stday+sthour+stminute;
-	    String endconvdatetime =endyear+endmonth+endday+endhour+endminute;
+	    String stconvdatetime =styear+stmonth+stday+sthour+stminute+"00";
+	    String endconvdatetime =endyear+endmonth+endday+endhour+endminute+"00";
 
 		//現在時刻の取得
 	    ZonedDateTime now = ZonedDateTime.now();
@@ -72,7 +72,6 @@ public class ReservCtrl extends HttpServlet {
 			dispatcher.forward(request,response);
 
 	    }
-
 
 	    //終了時間が開始時間以前だった場合、エラーを返す。
 	    if(Long.parseLong(stconvdatetime)>=Long.parseLong(endconvdatetime)){

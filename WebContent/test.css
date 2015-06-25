@@ -1,9 +1,11 @@
 @CHARSET "UTF-8";
 
+/* 全体を囲うdiv */
 div#sitebody {
 	width: 1000px;
 }
 
+/* エラー表示を囲うdiv */
 div #judge {
 	width: 300px;
 	hight:20px;
@@ -11,13 +13,37 @@ div #judge {
 	float : left;
 }
 
-.over {
-	width: 200px;
-	height: 100px;
-	background-color: #CCCCFF;
-	z-index: 100;
-	top: 29;
-	left: 0
+/* カレンダー関連 */
+/* カレンダーを囲うdiv */
+.calender {
+	clear: left;
+}
+
+#calendartable {
+	border-collapse: collapse;
+}
+
+#left{
+}
+
+#right{
+}
+
+#day{
+	width:20
+}
+
+/* 予約フォーム */
+.reservform {
+	height: 300px;
+	width: 330px;
+	float: left;
+	padding: 30px;
+	color: white;
+	background-color: #40bfb0;
+	padding: 15px;
+	margin-bottom: 10px;
+	border-right: 1px solid #dddddd;
 }
 
 .time {
@@ -47,37 +73,6 @@ div #judge {
 
 .gyou {
 	height: 600px;
-}
-
-
-.calender {
-	clear: left;
-
-}
-
-/* カレンダー関連 */
-#calendartable {border-collapse: collapse;}
-#left{
-
-}
-#right{
-
-}
-#day{
-	width:20
-}
-
-/* 予約フォーム */
-.reservform {
-	height: 300px;
-	width: 300px;
-	float: left;
-	padding: 30px;
-	color: white;
-	background-color: #40bfb0;
-	padding: 15px;
-	margin-bottom: 10px;
-	border-right: 1px solid #dddddd;
 }
 
 /* 1日の予約一覧 */
