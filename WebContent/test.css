@@ -3,7 +3,18 @@
 /* 全体を囲うdiv */
 div#sitebody {
 	width: 1000px;
+	margin: 0 auto;
 }
+
+/* 左側を固定 */
+.leftside {
+	float: left;
+	position: fixed;
+	background-color: #FFFFFF;
+	margin: 1px;
+	padding: 1px;
+}
+
 
 /* エラー表示を囲うdiv */
 div #judge {
