@@ -1,11 +1,11 @@
 jQuery(document).ready(function($) {
-  var prefix_mail_list = 'mail_'; // 品目入力欄のname属性の接頭辞
+
 
 	// "品目の追加"ボタンを押した場合の処理
 	$('#btn_add').click(function(){
 		// 品目入力欄を追加
 		var len_list = $('#mail_list > li').length;
-		var new_list = '<li><input type="text"  name="' + prefix_mail_list + len_list + '"　required>@level-five.jp</li>';
+		var new_list = '<li><input type="text" name="mail" required>@level-five.jp<input type="button" value="-"></li>';
 		$('#mail_list').append(new_list);
 
 		// 削除ボタンの一旦全消去し、配置し直す
@@ -35,3 +35,4 @@ jQuery(document).ready(function($) {
 		}
 	});
 });
+

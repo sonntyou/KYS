@@ -71,6 +71,12 @@ public class ReservContents implements Serializable {
 	private String stminute;
 	private String endminute;
 
+	/*
+	 * 削除後のリスト更新のために使用
+	 */
+	//形式：
+	private String selectdate;
+
 	//コンストラクタ
 	public ReservContents(){
 		reserveridlist = new ArrayList<Integer>();
@@ -164,6 +170,12 @@ public class ReservContents implements Serializable {
 	}
 
 
+	public String getSelectdate() {
+		return selectdate;
+	}
+
+
+
 
 	//セッター
 	public void setReservid(int reservid) {
@@ -199,6 +211,8 @@ public class ReservContents implements Serializable {
 	    String hour= stdatetime.substring(11,13);
 	    String minute= stdatetime.substring(14,16);
 	    String second=stdatetime.substring(17,19);
+
+	    this.selectdate=year+"-"+month+"-"+day;
 
 	    this.sthour = hour;
 	    this.stminute = minute;

@@ -22,9 +22,22 @@ import java.io.Serializable;
 
 public class SelectDateTime implements Serializable {
 	private String datetime,date,time,year,month,day,hour,minute,second;
+	private String convdatetime,convdate,convtime;
 
 	public SelectDateTime(){
 
+	}
+
+	public void setConvdatetime(String convdatetime) {
+		this.convdatetime = convdatetime;
+	}
+
+	public void setConvdate(String convdate) {
+		this.convdate = convdate;
+	}
+
+	public void setConvtime(String convtime) {
+		this.convtime = convtime;
 	}
 
 	public SelectDateTime(String datetime){
@@ -37,6 +50,10 @@ public class SelectDateTime implements Serializable {
 	    this.hour= datetime.substring(11,13);
 	    this.minute= datetime.substring(14,16);
 	    this.second=datetime.substring(17,19);
+
+	    this.convdatetime = year+month+day+hour+minute+second;
+	    this.convdate = year+month+day;
+	    this.convtime = hour+minute+second;
 
 
 	}
@@ -52,6 +69,11 @@ public class SelectDateTime implements Serializable {
 	    this.minute= datetime.substring(14,16);
 	    this.second=datetime.substring(17,19);
 
+	    this.convdatetime = year+month+day+hour+minute+second;
+	    this.convdate = year+month+day;
+	    this.convtime = hour+minute+second;
+
+
 
 	}
 
@@ -66,6 +88,11 @@ public class SelectDateTime implements Serializable {
 	    this.minute=minute;
 	    this.second=second;
 
+	    this.convdatetime = year+month+day+hour+minute+second;
+	    this.convdate = year+month+day;
+	    this.convtime = hour+minute+second;
+
+
 	}
 
 	public SelectDateTime(String date, String hour, String minute ,String second){
@@ -78,6 +105,11 @@ public class SelectDateTime implements Serializable {
 	    this.hour=hour;
 	    this.minute=minute;
 	    this.second=second;
+
+	    this.convdatetime = year+month+day+hour+minute+second;
+	    this.convdate = year+month+day;
+	    this.convtime = hour+minute+second;
+
 
 	}
 
@@ -116,6 +148,18 @@ public class SelectDateTime implements Serializable {
 
 	public String getSecond() {
 		return second;
+	}
+
+	public String getConvdatetime() {
+		return convdatetime;
+	}
+
+	public String getConvdate() {
+		return convdate;
+	}
+
+	public String getConvtime() {
+		return convtime;
 	}
 
 	public void setDatetime(String datetime) {

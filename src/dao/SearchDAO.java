@@ -64,15 +64,19 @@ public class SearchDAO {
 				//SELECTされたオブジェクトを1行ごとにReservContents型のに格納し、Listに追加していく
 				for(int i= 0;sars.next();){
 					if(reservList.get(i).getReservid()==(sars.getInt("reservid"))){
-					reservList.get(i).setReserveridlist(sars.getInt("accountid"));
-					reservList.get(i).setReserverlist(sars.getString("name"));
-					reservList.get(i).setMaillist(sars.getString("mail"));
+						reservList.get(i).setReserveridlist(sars.getInt("accountid"));
+						reservList.get(i).setReserverlist(sars.getString("name"));
+						reservList.get(i).setMaillist(sars.getString("mail"));
 					}else{
-						i++;
+						//次のインデックスのReservContentsに格納していく。
+						i+=1;
+						reservList.get(i).setReserveridlist(sars.getInt("accountid"));
+						reservList.get(i).setReserverlist(sars.getString("name"));
+						reservList.get(i).setMaillist(sars.getString("mail"));
 					}
 				}
 			}
-
+			return reservList;
 
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -90,7 +94,7 @@ public class SearchDAO {
 				}
 			}
 		}
-			return reservList;
+
 	}
 
 	private String getSearchReservSQL(String selectdate){
@@ -99,7 +103,7 @@ public class SearchDAO {
 				"SELECT r.reservid,title,r.resourceid,resource.resource,r.sttime,r.endtime FROM kysdb.reservtable AS r JOIN kysdb.resourcetable AS resource "
 				+ "ON r.resourceid = resource.resourceid"
 				+ " WHERE DATEDIFF(r.sttime,'"+selectdate+"')=0 or "
-						+ "DATEDIFF(r.endtime,'"+selectdate+"')=0 or (DATEDIFF(r.sttime,'"+selectdate+"')>=1 and DATEDIFF('"+selectdate+"',r.endtime)>=1)"
+						+ "DATEDIFF(r.endtime,'"+selectdate+"')=0 or (DATEDIFF('"+selectdate+"',r.sttime)>=1 and DATEDIFF(r.endtime,'"+selectdate+"')>=1)"
 								+ "ORDER BY r.reservid;";
 		return searchreservsql;
 	}

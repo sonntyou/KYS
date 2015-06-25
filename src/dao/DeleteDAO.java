@@ -1,3 +1,7 @@
+/*
+ * reservtable(親)とreservertable(子)が外部キー接続している。
+ */
+
 package dao;
 
 import java.sql.Connection;
@@ -26,7 +30,6 @@ public class DeleteDAO {
 					+ "FROM kysdb.reservertable as a "
 					+ "JOIN kysdb.accounttable as b ON a.accountid = b.accountid "
 					+ "where a.reservid = "+reservid+" and b.mail = '"+mail+"';";
-			System.out.println(searchsql);
 			PreparedStatement pstmt =conn.prepareStatement(searchsql);
 			//SQL文の実行
 			ResultSet rs = pstmt.executeQuery();

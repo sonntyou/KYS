@@ -3,6 +3,8 @@ package servlet;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.CalendarLogic;
+import model.Judge;
+import model.ReservContents;
 import model.SearchLogic;
 import model.SelectDateTime;
 import model.TimeChoices;
@@ -40,9 +44,19 @@ public class MainCtrl extends HttpServlet {
 		SelectDateTime today = new SelectDateTime(currentdatetime);
 		session.setAttribute("selectdatetime", today);
 
+		Judge judge = new Judge();
+
 		//アクセスした日の予約リストの生成と保存
 		SearchLogic searchlogic = new SearchLogic();
-		session.setAttribute("reservlist", searchlogic.execute());
+		List<ReservContents> reservlist = searchlogic.execute();
+		if(reservlist != null){
+			session.setAttribute("reservlist", reservlist);
+		}else{
+			judge.setJudge(15);
+			session.setAttribute("judge", judge);
+			reservlist = new ArrayList<ReservContents>();
+			session.setAttribute("reservlist", reservlist);
+		}
 
 		//カレンダーの生成と保存
 	    CalendarLogic calendar = new CalendarLogic();
@@ -51,6 +65,11 @@ public class MainCtrl extends HttpServlet {
 	    //アクセスしたときの日付を反映させたプルダウンメニューの生成と保存
 		TimeChoices timechoices = new TimeChoices(today);
 		session.setAttribute("timechoices",timechoices);
+
+		//エラーに関すること
+		judge.setJudge(0);
+		session.setAttribute("judge", judge);
+
 
 		RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
 		dispatcher.forward(request,response);

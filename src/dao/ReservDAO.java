@@ -24,10 +24,10 @@ public class ReservDAO {
 			Class.forName(DRIVER_NAME);
 			conn = DriverManager.getConnection(JDBC_URL,DB_USER,DB_PASS);
 
-			//maillistからreserveridlistとreserverlistを作成
+			//送られてきたメールからアカウント情報をセレクトしてくる
 			String accountsql = getAccountSQL(reservcontents);
 			PreparedStatement accountstmt =conn.prepareStatement(accountsql);
-			//SQL文(INSERT)の実行
+			//SQL文(SELECT)の実行
 			ResultSet accountrs =accountstmt.executeQuery();
 			while(accountrs.next()){
 				reservcontents.setReserveridlist(accountrs.getInt("accountid"));
@@ -53,10 +53,14 @@ public class ReservDAO {
 			reservnum =reservstmt.executeUpdate();
 
 			if(reservnum==1){
+				//予約ができた場合に実行
+
+				//今できた予約のreservidを取得する
 				String reservidsql = getReservidSQL(reservcontents);
 				PreparedStatement reservidstmt =conn.prepareStatement(reservidsql);
-				//SQL文(INSERT)の実行
+				//SQL文(SELECT)の実行
 				ResultSet rs =reservidstmt.executeQuery();
+
 				while(rs.next()){
 					reservid= rs.getInt("reservid");
 				}
@@ -66,7 +70,6 @@ public class ReservDAO {
 				reservernum = reserverstmt.executeUpdate();
 				reservercount = reservcontents.getReserveridlist().size();
 			}
-
 
 			if(reservnum == 0){
 				//重複があった場合に実行
@@ -130,18 +133,19 @@ public class ReservDAO {
 				+ " and ((sttime<='"+stdatetime+"' and '"+stdatetime+"' < endtime) "
 				+ " or (sttime<'"+enddatetime+"'and '"+enddatetime+"' <= endtime) "
 				+ " or (sttime >= '"+stdatetime+"' and '"+enddatetime+"'>= endtime))); ";
-		System.out.println(reservsql);
 		return reservsql;
 	}
 
 	private String getReservidSQL(ReservContents reservcontents){
+		/* 予約を一意に決めるには
+		 * 場所と開始時間がわかればよい
+		 */
 		String reservidsql = "";
 		int resourceid=reservcontents.getResourceid();
 		String stdatetime =reservcontents.getStdatetime();
 
 		reservidsql += "SELECT reservid from kysdb.reservtable "
-				+ "where resourceid="+resourceid+" and stdatetime='"+stdatetime+"';";
-
+				+ "where resourceid="+resourceid+" and sttime='"+stdatetime+"';";
 		return reservidsql;
 
 

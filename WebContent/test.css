@@ -4,6 +4,13 @@ div#sitebody {
 	width: 1000px;
 }
 
+div #judge {
+	width: 300px;
+	hight:20px;
+	background-color: #FFFF00;
+	float : left;
+}
+
 .over {
 	width: 200px;
 	height: 100px;
@@ -39,7 +46,7 @@ div#sitebody {
 }
 
 .gyou {
-	height: 1000px;
+	height: 600px;
 }
 
 
@@ -48,10 +55,19 @@ div#sitebody {
 
 }
 
-/*  */
+/* カレンダー関連 */
 #calendartable {border-collapse: collapse;}
-#left{}
+#left{
 
+}
+#right{
+
+}
+#day{
+	width:20
+}
+
+/* 予約フォーム */
 .reservform {
 	height: 300px;
 	width: 300px;
@@ -64,6 +80,7 @@ div#sitebody {
 	border-right: 1px solid #dddddd;
 }
 
+/* 1日の予約一覧 */
 .dayreserv {
 	float: right;
 	width: 580px;
@@ -75,18 +92,7 @@ div#sitebody {
 	border-right: 1px solid #dddddd;
 }
 
-.appoint {
-	height: 200px;
-	width: 300px;
-	float: left;
-	padding: 30px;
-	color: white;
-	background-color: #FFFF33;
-	padding: 15px;
-	margin-bottom: 10px;
-	border-right: 1px solid #dddddd;
-}
-
+/* 1つの予約に関する表示 */
 .reserv {
 	z-index: 2;
 	background: #ffc867;

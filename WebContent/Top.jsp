@@ -19,7 +19,9 @@
 <!-- 最初にいくつかのデータを読み込む -->
 <%
 int width = 150;
-int leftref = 436;
+
+//予約の左上の位置
+int leftref =458;
 int topref= 157;
 
 List<ReservContents> reservlist = (List<ReservContents>)session.getAttribute("reservlist");
@@ -28,6 +30,7 @@ int size =reservlist.size();
 <!-- 最初にいくつかのデータを読み込む(ここまで) -->
 
 <!-- 予約フォーム -->
+
 <div class="reservform">
 <h3>予約フォーム</h3>
 
@@ -74,7 +77,7 @@ ${timechoices.minutechoices}
 
 
 	<ol id="mail_list">
-		<li><input type="text" name="mail_0" required>@level-five.jp</li>
+		<li><input type="text" name="mail" required>@level-five.jp</li>
 	</ol>
 	<input type="button" value="アドレス追加" id="btn_add">
 
@@ -84,6 +87,7 @@ ${timechoices.minutechoices}
 
 <input type="submit" value="予約">
 </form>
+
 </div>
 <!-- 予約フォーム(ここまで) -->
 
@@ -172,6 +176,14 @@ ${timechoices.minutechoices}
 </div>
 <!-- １日の予約の一覧を表示する(ここまで) -->
 
+<!-- Judg.jspの動的インクルード -->
+
+<div id="judge">
+<%@ include file="/Judge.jsp" %>
+</div>
+
+<!-- Judg.jspの動的インクルード -->
+
 <!-- カレンダーを表示する -->
 <div class="calender">
 ${calendar.calendar}
@@ -206,18 +218,18 @@ if(longstdate09 <= longstconvdatetime && longendconvdatetime <= longenddate21 ){
 	intendminute=reservlist.get(i).getIntendminute();
 }else if(longstconvdatetime <= longstdate09 && longendconvdatetime <= longenddate21 ){
 	intsthour = 9;
-	intendhour= 0;
+	intendhour= 21;
 	intstminute=reservlist.get(i).getIntstminute();
 	intendminute=reservlist.get(i).getIntendminute();
 }else if(longstdate09 <= longstconvdatetime &&  longenddate21 <= longendconvdatetime ){
 	intsthour = reservlist.get(i).getIntsthour();
 	intendhour=reservlist.get(i).getIntendhour();
-	intstminute=21;
-	intendminute= 0;
+	intstminute=0;
+	intendminute=0;
 }else{
 	intsthour = 9;
-	intendhour= 0;
-	intstminute=21;
+	intendhour= 21;
+	intstminute=0;
 	intendminute= 0;
 }
 
@@ -226,7 +238,7 @@ int leftside = (resourceid - 1) * 150+leftref;
 //上端と下端の値
 int px=120;
 int topside = (intsthour-9)*px + intstminute*px/60+topref;
-int height = ((intendhour*60+intendminute)-(intendhour*60+intendminute))*px/60;
+int height = ((intendhour*60+intendminute)-(intsthour*60+intstminute))*px/60;
 %>
 
 
@@ -248,6 +260,8 @@ int height = ((intendhour*60+intendminute)-(intendhour*60+intendminute))*px/60;
 			mail:<br>
 			<form action="/KYS/DeleteCtrl" method="Post">
 			<input type="text" name="mail" required>@level-five.jp
+			<input type="hidden" name="selectdate" value="${selectdatetime.date }">
+			<input type="hidden" name="reservid" value="<%=reservlist.get(i).getReservid() %>">
 			<input type="submit" value="削除" onClick="return confirm('本当に削除しますか？')">
 			</form>
 		</span>
