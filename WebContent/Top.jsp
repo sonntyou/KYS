@@ -208,7 +208,7 @@ String stmonth=reservlist.get(i).getStmonth();
 String endmonth=reservlist.get(i).getEndmonth();
 
 String stday=reservlist.get(i).getStday();
-String endday=reservlist.get(i).getEndyear();
+String endday=reservlist.get(i).getEndday();
 
 String sthour=reservlist.get(i).getSthour();
 String endhour=reservlist.get(i).getEndhour();
@@ -244,8 +244,8 @@ if(longselectconvdatetime09 <= longstconvdatetime && longendconvdatetime <= long
 }else{
 	//日を完全にまたいでいるときは、9時から21時まで。
 	intsthour = 9;
-	intendhour= 21;
 	intstminute=0;
+	intendhour= 21;
 	intendminute= 0;
 }
 

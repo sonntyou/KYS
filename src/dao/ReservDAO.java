@@ -119,7 +119,7 @@ public class ReservDAO {
 	}
 
 	private String getReservSQL(ReservContents reservcontents){
-		//ReservContentsに登録された予約情報をゲットしてます。
+		//重複がなければINSERTします。
 		String title = reservcontents.getTitle();
 		int resourceid=reservcontents.getResourceid();
 		String stdatetime =reservcontents.getStdatetime();

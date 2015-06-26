@@ -73,7 +73,6 @@ public class MainCtrl extends HttpServlet {
 
 		RequestDispatcher dispatcher=request.getRequestDispatcher("/Top.jsp");
 		dispatcher.forward(request,response);
-
 		}
 
 	/**
